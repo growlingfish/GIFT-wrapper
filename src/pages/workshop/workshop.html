@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Workshop</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ng-container *ngIf="this.workshop.gift">
+    <ng-container *ngIf="this.workshop.gift.isFinished()">
+      <p>You've added enough components to make a gift. You can keep adding to it, or send the gift straight away.</p>
+      <button ion-button success (click)="this.workshop.sendGift()">Send the Gift</button>
+    </ng-container>
+    <p>You're working on a gift. You need to complete each of the following components of the gift before you can send it.</p>
+    <ion-list>
+      <ion-item>
+        <ion-icon name="pricetag" item-start></ion-icon>
+          Title
+        <ion-icon [name]="false ? 'checkmark-circle' : 'close-circle'" [color]="false ? 'secondary' : 'danger'" item-end></ion-icon>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="contact" item-start></ion-icon>
+          Receiver
+        <ion-icon [name]="false ? 'checkmark-circle' : 'close-circle'" [color]="false ? 'secondary' : 'danger'" item-end></ion-icon>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="heart" item-start></ion-icon>
+          Payload
+        <ion-icon [name]="false ? 'checkmark-circle' : 'close-circle'" [color]="false ? 'secondary' : 'danger'" item-end></ion-icon>
+      </ion-item>
+      <ion-item>
+        <ion-icon name="lock" item-start></ion-icon>
+          Wraps
+        <ion-icon [name]="false ? 'checkmark-circle' : 'close-circle'" [color]="false ? 'secondary' : 'danger'" item-end></ion-icon>
+      </ion-item>
+    </ion-list>
+    <button ion-button danger (click)="this.workshop.scrapGift()">Scrap this Gift</button>
+  </ng-container>
+  <ng-container *ngIf="!this.workshop.gift">
+    <p>Your workshop is empty.</p>
+    <button ion-button success (click)="this.workshop.startGift()">Start a new Gift</button>
+  </ng-container>
+</ion-content>

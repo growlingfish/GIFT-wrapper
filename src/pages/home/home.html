@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Home</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <h3>Gifting.Digital</h3>
+
+  <p>Hello {{this.currentUser.name}}</p>
+
+  <button ion-button secondary (click)="openWorkshop()">Open your Workshop</button>
+</ion-content>
