@@ -3,6 +3,8 @@ import { NavController, NavParams } from 'ionic-angular';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { WorkshopServiceProvider } from '../../providers/workshop-service/workshop-service';
 import { User } from '../../providers/auth-service/auth-service';
+import { TitlePage } from '../title/title';
+import { ReceiverPage } from '../receiver/receiver';
 
 @Component({
   selector: 'page-workshop',
@@ -21,11 +23,11 @@ export class WorkshopPage {
   }
 
   editTitle () {
-    console.log("Edit");
+    this.navCtrl.push(TitlePage);
   }
 
   editReceiver () {
-    console.log("Edit");
+    this.navCtrl.push(ReceiverPage);
   }
 
   editPayloads () {

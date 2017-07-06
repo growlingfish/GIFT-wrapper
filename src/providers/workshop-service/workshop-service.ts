@@ -10,6 +10,8 @@ export class Gift {
   payloads: Array<Payload>;
 
   constructor() {
+    this.title = null;
+    this.receiver = null;
     this.wraps = [];
     this.payloads = [];
   }
@@ -24,19 +26,19 @@ export class Gift {
   }
 
   titleComplete () {
-    return this.title !== undefined && this.title.length > 0;
+    return this.title !== null && this.title.length > 0;
   }
 
   receiverComplete () {
-    return this.receiver !== undefined && this.receiver.length > 0;
+    return this.receiver !== null && this.receiver.length > 0;
   }
 
   wrapsComplete () {
-    return this.wraps !== undefined && this.wraps.length > 0;
+    return this.wraps !== null && this.wraps.length > 0;
   }
 
   payloadsComplete () {
-    return this.payloads !== undefined && this.payloads.length > 0;
+    return this.payloads !== null && this.payloads.length > 0;
   }
 }
 
@@ -83,10 +85,10 @@ export class WorkshopServiceProvider {
     this.gift = null;
     storage.get('workingGift').then((workingGift) => {
       this.gift = new Gift();
-      if (workingGift.title !== undefined) {
+      if (typeof(workingGift.title) !== "undefined") {
         this.gift.title = workingGift.title;
       }
-      if (workingGift.receiver !== undefined) {
+      if (typeof(workingGift.receiver) !== "undefined") {
         this.gift.receiver = workingGift.receiver;
       }
       workingGift.wraps.forEach(wrap => {
@@ -116,6 +118,10 @@ export class WorkshopServiceProvider {
 
   startGift () {
     this.gift = new Gift();
+    this.storeGift();
+  }
+
+  storeGift () {
     this.storage.set('workingGift', this.gift);
   }
 

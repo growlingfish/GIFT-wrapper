@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Receiver</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <p>Enter the email address of the person who will receive your gift:</p>
+  <ion-item>
+    <ion-input type="email" email placeholder="Enter the email address" [(ngModel)]="receiverText"></ion-input>
+  </ion-item>
+  <p>
+    <button ion-button color="danger" (click)="cancelReceiver()">
+      I can't do this right now
+    </button>
+    <button ion-button [disabled]="receiverValid()" (click)="submitReceiver()">
+      Submit
+    </button>
+  </p>
+</ion-content>

@@ -9,6 +9,8 @@ import { HomePage } from '../pages/home/home';
 import { WorkshopPage } from '../pages/workshop/workshop';
 import { LoginPage } from '../pages/login/login';
 import { LogoutPage } from '../pages/logout/logout';
+import { TitlePage } from '../pages/title/title';
+import { ReceiverPage } from '../pages/receiver/receiver';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -22,7 +24,9 @@ import { WorkshopServiceProvider } from '../providers/workshop-service/workshop-
     HomePage,
     LogoutPage,
     LoginPage,
-    WorkshopPage
+    WorkshopPage,
+    TitlePage,
+    ReceiverPage
   ],
   imports: [
     BrowserModule,
@@ -36,7 +40,9 @@ import { WorkshopServiceProvider } from '../providers/workshop-service/workshop-
     HomePage,
     LogoutPage,
     LoginPage,
-    WorkshopPage
+    WorkshopPage,
+    TitlePage,
+    ReceiverPage
   ],
   providers: [
     StatusBar,

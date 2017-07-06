@@ -1,0 +1,22 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Title</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <p>Enter a title for your gift:</p>
+  <ion-item>
+    <ion-textarea placeholder="Enter the title" [(ngModel)]="titleText"></ion-textarea>
+  </ion-item>
+  <p>
+    <button ion-button color="danger" (click)="cancelTitle()">
+      I can't do this right now
+    </button>
+    <button ion-button (click)="submitTitle()">
+      Submit
+    </button>
+  </p>
+</ion-content>
