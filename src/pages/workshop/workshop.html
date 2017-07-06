@@ -6,37 +6,39 @@
 
 
 <ion-content padding>
-  <ng-container *ngIf="this.workshop.gift">
-    <ng-container *ngIf="this.workshop.gift.isFinished()">
+  <ng-container *ngIf="this.workshop.giftIsStarted()">
+    <ng-container *ngIf="this.workshop.giftIsFinished()">
       <p>You've added enough components to make a gift. You can keep adding to it, or send the gift straight away.</p>
       <button ion-button success (click)="this.workshop.sendGift()">Send the Gift</button>
     </ng-container>
-    <p>You're working on a gift. You need to complete each of the following components of the gift before you can send it.</p>
+    <ng-container *ngIf="!this.workshop.giftIsFinished()">
+      <p>You're working on a gift. You need to complete each of the following components of the gift before you can send it.</p>
+    </ng-container>
     <ion-list>
-      <ion-item>
+      <button ion-item (click)="editTitle()">
         <ion-icon name="pricetag" item-start></ion-icon>
           Title
-        <ion-icon [name]="false ? 'checkmark-circle' : 'close-circle'" [color]="false ? 'secondary' : 'danger'" item-end></ion-icon>
-      </ion-item>
-      <ion-item>
+        <ion-icon [name]="this.workshop.gift.titleComplete() ? 'checkmark-circle' : 'close-circle'" [color]="this.workshop.gift.titleComplete() ? 'secondary' : 'danger'" item-end></ion-icon>
+      </button>
+      <button ion-item (click)="editReceiver()">
         <ion-icon name="contact" item-start></ion-icon>
           Receiver
-        <ion-icon [name]="false ? 'checkmark-circle' : 'close-circle'" [color]="false ? 'secondary' : 'danger'" item-end></ion-icon>
-      </ion-item>
-      <ion-item>
+        <ion-icon [name]="this.workshop.gift.receiverComplete() ? 'checkmark-circle' : 'close-circle'" [color]="this.workshop.gift.receiverComplete() ? 'secondary' : 'danger'" item-end></ion-icon>
+      </button>
+      <button ion-item (click)="editPayloads()">
         <ion-icon name="heart" item-start></ion-icon>
           Payload
-        <ion-icon [name]="false ? 'checkmark-circle' : 'close-circle'" [color]="false ? 'secondary' : 'danger'" item-end></ion-icon>
-      </ion-item>
-      <ion-item>
+        <ion-icon [name]="this.workshop.gift.payloadsComplete() ? 'checkmark-circle' : 'close-circle'" [color]="this.workshop.gift.payloadsComplete() ? 'secondary' : 'danger'" item-end></ion-icon>
+      </button>
+      <button ion-item (click)="editWraps()">
         <ion-icon name="lock" item-start></ion-icon>
           Wraps
-        <ion-icon [name]="false ? 'checkmark-circle' : 'close-circle'" [color]="false ? 'secondary' : 'danger'" item-end></ion-icon>
-      </ion-item>
+        <ion-icon [name]="this.workshop.gift.wrapsComplete() ? 'checkmark-circle' : 'close-circle'" [color]="this.workshop.gift.wrapsComplete() ? 'secondary' : 'danger'" item-end></ion-icon>
+      </button>
     </ion-list>
-    <button ion-button danger (click)="this.workshop.scrapGift()">Scrap this Gift</button>
+    <button ion-button danger (click)="scrapGift()">Scrap this Gift</button>
   </ng-container>
-  <ng-container *ngIf="!this.workshop.gift">
+  <ng-container *ngIf="!this.workshop.giftIsStarted()">
     <p>Your workshop is empty.</p>
     <button ion-button success (click)="this.workshop.startGift()">Start a new Gift</button>
   </ng-container>

@@ -14,4 +14,25 @@ export class WorkshopPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private auth: AuthServiceProvider, private workshop: WorkshopServiceProvider) {
     this.currentUser = auth.getUserInfo();
   }
+
+  scrapGift () {
+    this.workshop.scrapGift();
+    this.navCtrl.popToRoot();
+  }
+
+  editTitle () {
+    console.log("Edit");
+  }
+
+  editReceiver () {
+    console.log("Edit");
+  }
+
+  editPayloads () {
+    console.log("Edit");
+  }
+
+  editWraps () {
+    console.log("Edit");
+  }
 }

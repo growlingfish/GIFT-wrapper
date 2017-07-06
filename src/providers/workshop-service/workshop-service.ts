@@ -16,11 +16,27 @@ export class Gift {
 
   isFinished () {
     return (
-      this.title && this.title.length > 0
-      && this.receiver && this.receiver.length > 0
-      && this.wraps && this.wraps.length > 0
-      && this.payloads && this.payloads.length > 0
+      this.titleComplete()
+      && this.receiverComplete()
+      && this.wrapsComplete()
+      && this.payloadsComplete()
     );
+  }
+
+  titleComplete () {
+    return this.title !== undefined && this.title.length > 0;
+  }
+
+  receiverComplete () {
+    return this.receiver !== undefined && this.receiver.length > 0;
+  }
+
+  wrapsComplete () {
+    return this.wraps !== undefined && this.wraps.length > 0;
+  }
+
+  payloadsComplete () {
+    return this.payloads !== undefined && this.payloads.length > 0;
   }
 }
 
@@ -64,11 +80,38 @@ export class WorkshopServiceProvider {
   gift: Gift;
 
   constructor(public http: Http, private storage: Storage) {
+    this.gift = null;
     storage.get('workingGift').then((workingGift) => {
-      this.gift = workingGift;
+      this.gift = new Gift();
+      if (workingGift.title !== undefined) {
+        this.gift.title = workingGift.title;
+      }
+      if (workingGift.receiver !== undefined) {
+        this.gift.receiver = workingGift.receiver;
+      }
+      workingGift.wraps.forEach(wrap => {
+        this.gift.wraps.push(new Wrap(wrap.title));
+      });
+      workingGift.payloads.forEach(payload => {
+        this.gift.payloads.push(new Payload(payload.title, payload.content));
+      });
     }).catch(
       console.log.bind(console)
     );
+  }
+
+  giftIsStarted () {
+    if (this.gift == null) {
+      return false;
+    }
+    return true;
+  }
+
+  giftIsFinished () {
+    if (this.gift == null) {
+      return false;
+    }
+    return this.gift.isFinished();
   }
 
   startGift () {
