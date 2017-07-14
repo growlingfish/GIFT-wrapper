@@ -8,12 +8,14 @@ export class Gift {
   receiver: string;
   wraps: Array<Wrap>;
   payloads: Array<Payload>;
+  giftcard: Giftcard;
 
   constructor() {
     this.title = null;
     this.receiver = null;
     this.wraps = [];
     this.payloads = [];
+    this.giftcard = null;
   }
 
   isFinished () {
@@ -22,6 +24,7 @@ export class Gift {
       && this.receiverComplete()
       && this.wrapsComplete()
       && this.payloadsComplete()
+      && this.giftcardComplete()
     );
   }
 
@@ -39,6 +42,11 @@ export class Gift {
 
   payloadsComplete () {
     return this.payloads !== null && this.payloads.length > 0;
+  }
+
+  giftcardComplete () {
+    return this.giftcard !== null && this.giftcard.content.length > 0
+      && this.giftcard.title.length > 0;
   }
 }
 
@@ -77,6 +85,16 @@ class Challenge {
   }
 }
 
+export class Giftcard {
+  title: string;
+  content: string;
+
+  constructor (title: string, content: string) {
+    this.title = title;
+    this.content = content;
+  }
+}
+
 @Injectable()
 export class WorkshopServiceProvider {
   gift: Gift;
@@ -97,6 +115,9 @@ export class WorkshopServiceProvider {
       workingGift.payloads.forEach(payload => {
         this.gift.payloads.push(new Payload(payload.title, payload.content));
       });
+      if (typeof(workingGift.giftcard) !== "undefined") {
+        this.gift.giftcard = new Giftcard(workingGift.giftcard.title, workingGift.giftcard.content);
+      }
     }).catch(
       console.log.bind(console)
     );

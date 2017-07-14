@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Gift Card</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <p>Your gift will be sent with a gift card. The gift card will be the first thing the receiver sees, before they start unwrapping the gift.</p>
+  <ion-item>
+    <ion-textarea placeholder="Enter the gift card text" [(ngModel)]="giftcardText"></ion-textarea>
+  </ion-item>
+  <p>
+    <button ion-button color="danger" (click)="cancelGiftcard()">
+      I can't do this right now
+    </button>
+    <button ion-button (click)="submitGiftcard()">
+      Submit
+    </button>
+  </p>
+</ion-content>

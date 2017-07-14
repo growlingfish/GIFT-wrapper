@@ -11,6 +11,7 @@ import { LoginPage } from '../pages/login/login';
 import { LogoutPage } from '../pages/logout/logout';
 import { TitlePage } from '../pages/title/title';
 import { ReceiverPage } from '../pages/receiver/receiver';
+import { GiftcardPage } from '../pages/giftcard/giftcard';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -26,7 +27,8 @@ import { WorkshopServiceProvider } from '../providers/workshop-service/workshop-
     LoginPage,
     WorkshopPage,
     TitlePage,
-    ReceiverPage
+    ReceiverPage,
+    GiftcardPage
   ],
   imports: [
     BrowserModule,
@@ -42,7 +44,8 @@ import { WorkshopServiceProvider } from '../providers/workshop-service/workshop-
     LoginPage,
     WorkshopPage,
     TitlePage,
-    ReceiverPage
+    ReceiverPage,
+    GiftcardPage
   ],
   providers: [
     StatusBar,

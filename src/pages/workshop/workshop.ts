@@ -5,6 +5,7 @@ import { WorkshopServiceProvider } from '../../providers/workshop-service/worksh
 import { User } from '../../providers/auth-service/auth-service';
 import { TitlePage } from '../title/title';
 import { ReceiverPage } from '../receiver/receiver';
+import { GiftcardPage } from '../giftcard/giftcard';
 
 @Component({
   selector: 'page-workshop',
@@ -14,7 +15,7 @@ export class WorkshopPage {
   currentUser: User;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private auth: AuthServiceProvider, private workshop: WorkshopServiceProvider) {
-    this.currentUser = auth.getUserInfo();
+    this.currentUser = this.auth.getUserInfo();
   }
 
   scrapGift () {
@@ -36,5 +37,9 @@ export class WorkshopPage {
 
   editWraps () {
     console.log("Edit");
+  }
+
+  editGiftcard () {
+    this.navCtrl.push(GiftcardPage);
   }
 }

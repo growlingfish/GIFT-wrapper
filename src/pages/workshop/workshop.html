@@ -35,6 +35,11 @@
           Title
         <ion-icon [name]="this.workshop.gift.titleComplete() ? 'checkmark-circle' : 'close-circle'" [color]="this.workshop.gift.titleComplete() ? 'secondary' : 'danger'" item-end></ion-icon>
       </button>
+      <button ion-item (click)="editGiftcard()">
+        <ion-icon name="create" item-start></ion-icon>
+          Gift card
+        <ion-icon [name]="this.workshop.gift.giftcardComplete() ? 'checkmark-circle' : 'close-circle'" [color]="this.workshop.gift.giftcardComplete() ? 'secondary' : 'danger'" item-end></ion-icon>
+      </button>
     </ion-list>
     <button ion-button danger (click)="scrapGift()">Scrap this Gift</button>
   </ng-container>
