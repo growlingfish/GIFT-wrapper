@@ -25,4 +25,8 @@ export class TitlePage {
     this.nav.pop();
   }
 
+  titleComplete () {
+    return typeof(this.titleText) != 'undefined' && this.titleText.length > 0;
+  }
+
 }

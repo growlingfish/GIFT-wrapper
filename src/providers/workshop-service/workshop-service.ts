@@ -51,6 +51,7 @@ export class Gift {
 }
 
 export class Wrap {
+  id: number;
   title: string;
   challenges: Array<Challenge>;
 
@@ -65,16 +66,18 @@ export class Wrap {
 }
 
 export class Payload {
+  id: number;
   title: string;
   content: string;
 
-  constructor(title: string, content: string) {
+  constructor(id: number, title: string, content: string) {
+    this.id = id;
     this.title = title;
     this.content = content;
   }
 }
 
-class Challenge {
+export class Challenge {
   type: string;
   task: string;
   completed: boolean;
@@ -113,7 +116,7 @@ export class WorkshopServiceProvider {
         this.gift.wraps.push(new Wrap(wrap.title));
       });
       workingGift.payloads.forEach(payload => {
-        this.gift.payloads.push(new Payload(payload.title, payload.content));
+        this.gift.payloads.push(new Payload(payload.id, payload.title, payload.content));
       });
       if (typeof(workingGift.giftcard) !== "undefined") {
         this.gift.giftcard = new Giftcard(workingGift.giftcard.title, workingGift.giftcard.content);
@@ -147,7 +150,7 @@ export class WorkshopServiceProvider {
   }
 
   sendGift () {
-
+    console.log("send");
   }
 
   scrapGift () {

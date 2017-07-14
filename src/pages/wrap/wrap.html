@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Wrap</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <p>Tap on any of the following challenges that you wish to set for the receiver.</p>
+  <ion-list>
+    <button ion-item *ngFor="let type of this.types" (click)="addChallenge(type.name)">
+      <ion-icon [name]="type.getIcon()" item-left></ion-icon>
+      {{type.getHint()}}
+    </button>
+  </ion-list>
+  <p>
+    <button ion-button color="danger" (click)="cancelWrap()">
+      I can't do this right now
+    </button> 
+    <button ion-button [disabled]="!wrapComplete()" (click)="submitWrap()">
+      Submit
+    </button>
+  </p>
+</ion-content>

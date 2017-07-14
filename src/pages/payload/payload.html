@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{this.title}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <p>Enter the text that the receiver will be able to read when the gift is unwrapped.</p>
+  <ion-item>
+    <ion-textarea placeholder="Enter the content" [(ngModel)]="content"></ion-textarea>
+  </ion-item>
+  <p>
+    <button ion-button color="danger" (click)="cancelPayload()">
+      I can't do this right now
+    </button> 
+    <button ion-button [disabled]="!payloadComplete()" (click)="submitPayload()">
+      Submit
+    </button>
+  </p>
+</ion-content>

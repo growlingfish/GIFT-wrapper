@@ -6,6 +6,8 @@ import { User } from '../../providers/auth-service/auth-service';
 import { TitlePage } from '../title/title';
 import { ReceiverPage } from '../receiver/receiver';
 import { GiftcardPage } from '../giftcard/giftcard';
+import { PayloadsPage } from '../payloads/payloads';
+import { WrapsPage } from '../wraps/wraps';
 
 @Component({
   selector: 'page-workshop',
@@ -32,11 +34,11 @@ export class WorkshopPage {
   }
 
   editPayloads () {
-    console.log("Edit");
+    this.navCtrl.push(PayloadsPage);
   }
 
   editWraps () {
-    console.log("Edit");
+    this.navCtrl.push(WrapsPage);
   }
 
   editGiftcard () {

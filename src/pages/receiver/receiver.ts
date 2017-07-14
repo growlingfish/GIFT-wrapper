@@ -55,7 +55,12 @@ export class ReceiverPage {
                   }
                 },
                 {
-                  text: 'OK, carry on'
+                  text: 'OK, carry on',
+                  handler: () => {
+                    console.log("setup new receiver");
+                    this.loading.dismiss();
+                    this.nav.pop();
+                  }
                 }
               ]
             });

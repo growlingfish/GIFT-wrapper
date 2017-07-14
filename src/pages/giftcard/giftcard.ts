@@ -33,4 +33,8 @@ export class GiftcardPage {
     this.nav.pop();
   }
 
+  giftcardTextComplete () {
+    return typeof(this.giftcardText) != 'undefined' && this.giftcardText.length > 0;
+  }
+
 }

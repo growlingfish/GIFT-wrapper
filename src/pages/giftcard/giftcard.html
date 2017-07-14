@@ -13,7 +13,7 @@
     <button ion-button color="danger" (click)="cancelGiftcard()">
       I can't do this right now
     </button>
-    <button ion-button (click)="submitGiftcard()">
+    <button ion-button [disabled]="!giftcardTextComplete()" (click)="submitGiftcard()">
       Submit
     </button>
   </p>
