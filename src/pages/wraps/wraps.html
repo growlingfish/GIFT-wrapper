@@ -7,17 +7,19 @@
 <ion-content padding>
   <ng-container *ngIf="this.workshop.gift.wrapsComplete()">
     <p>You've added enough wrapping to your gift. You can keep adding more, or return to editing other aspects of your gift now.</p>
-    <button ion-button success (click)="this.backToGift()">Back to Gift</button>
   </ng-container>
   <ng-container *ngIf="!this.workshop.gift.wrapsComplete()">
     <p>You need to add at least one wrap to your gift. These are the challenges that the receiver must complete to unwrap the gift.</p>
   </ng-container>
   <ion-list>
     <button ion-item *ngFor="let item of this.workshop.gift.wraps" (click)="editWrap(item)">
-      <ion-icon name="lock" item-left></ion-icon> {{item.content}}
+      <ion-icon name="lock" item-left></ion-icon> {{item.title}}
     </button>
     <button ion-item (click)="addWrap()">
       <ion-icon name="add-circle" item-start></ion-icon> Add another wrap
     </button>
   </ion-list>
+  <ng-container *ngIf="this.workshop.gift.wrapsComplete()">
+    <p><button ion-button success (click)="this.backToGift()">Back to Gift</button></p>
+  </ng-container>
 </ion-content>

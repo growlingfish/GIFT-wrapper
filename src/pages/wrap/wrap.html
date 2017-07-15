@@ -7,16 +7,16 @@
 <ion-content padding>
   <p>Tap on any of the following challenges that you wish to set for the receiver.</p>
   <ion-list>
-    <button ion-item *ngFor="let type of this.types" (click)="addChallenge(type.name)">
+    <button ion-item *ngFor="let type of this.types" (click)="addChallenge(type.name)" [color]="typeAdded(type.name) ? 'secondary' : ''">
       <ion-icon [name]="type.getIcon()" item-left></ion-icon>
       {{type.getHint()}}
     </button>
   </ion-list>
   <p>
-    <button ion-button color="danger" (click)="cancelWrap()">
-      I can't do this right now
+    <button ion-button color="danger" [disabled]="!wrapComplete()" (click)="cancelWrap()">
+      Delete
     </button> 
-    <button ion-button [disabled]="!wrapComplete()" (click)="submitWrap()">
+    <button ion-button color="secondary" [disabled]="!wrapComplete()" (click)="submitWrap()">
       Submit
     </button>
   </p>

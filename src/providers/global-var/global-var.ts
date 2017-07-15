@@ -5,6 +5,7 @@ export class GlobalVarProvider {
 
   apiBase: string;
   notificationBase: string;
+  uploadBase: string;
   mapboxToken: string;
   latitude: number;
   longitude: number;
@@ -34,5 +35,17 @@ export class GlobalVarProvider {
 
   getValidateReceiverURL (email) {
     return this.getApiBase() + "validate/receiver/" + email;
+  }
+
+  getObjectsURL (userId) {
+    return this.getApiBase() + "objects/" + userId;
+  }
+
+  getObjectPhotoUploadURL () {
+    return this.getApiBase() + "upload/object/";
+  }
+
+  getFinaliseObjectURL () {
+    return this.getApiBase() + "new/object/";
   }
 }

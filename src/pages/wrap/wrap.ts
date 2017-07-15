@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { WorkshopServiceProvider, Wrap, Challenge } from '../../providers/workshop-service/workshop-service';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+import { ObjectwrapPage } from '../objectwrap/objectwrap';
 
 class ChallengeType {
   name: string;
@@ -50,29 +52,16 @@ class ChallengeType {
 })
 export class WrapPage {
   wrapId: number;
-  title: string;
-  challenges: Array<Challenge>;
   types: Array<ChallengeType>;
 
-  constructor(public nav: NavController, public navParams: NavParams, private workshop: WorkshopServiceProvider) {
-    var typeNames = ['date', 'key', 'artcode', 'place', 'personal', 'object'];
+  constructor(public nav: NavController, public navParams: NavParams, private workshop: WorkshopServiceProvider, public modalCtrl: ModalController, private auth: AuthServiceProvider) {
+    var typeNames = ['date', 'place', 'object', 'key', 'personal', 'artcode'];
     this.types = [];
     for (var i = 0; i < typeNames.length; i++) {
       this.types.push(new ChallengeType(typeNames[i]));
     }
 
     this.wrapId = this.navParams.get('wrapId');
-    if (typeof(this.wrapId) != 'undefined') {
-      this.title = this.workshop.gift.wraps[this.wrapId].title;
-      this.challenges = this.workshop.gift.wraps[this.wrapId].challenges;
-    }
-  }
-
-  addChallenge (type) {
-    console.log(type);
-  }
-
-  submitWrap () {
     if (typeof(this.wrapId) == 'undefined') {
       var i = 0;
       while (typeof(this.wrapId) == 'undefined') {
@@ -81,24 +70,88 @@ export class WrapPage {
         }
         i++;
       }
-      var wrap = new Wrap(this.title);
-      wrap.id = this.wrapId;
-      wrap.challenges = this.challenges;
-      this.workshop.gift.wraps.push(wrap);
-    } else {
-      this.workshop.gift.wraps[this.wrapId].title = this.title;
-      this.workshop.gift.wraps[this.wrapId].challenges = this.challenges;
+      this.workshop.gift.wraps.push(new Wrap(this.wrapId, this.auth.currentUser.name + "'s wrap started at " + (new Date().toISOString())));
     }
+  }
+
+  typeAdded (type) {
+    if (typeof(this.workshop.gift.getWrapWithID(this.wrapId)) != 'undefined') {
+      for (var i = 0; i < this.workshop.gift.getWrapWithID(this.wrapId).challenges.length; i++) {
+        if (this.workshop.gift.getWrapWithID(this.wrapId).challenges[i].type == type) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  addChallenge (type) {
+    switch (type) {
+      case 'date':
+        console.log(type);
+        break;
+      case 'key':
+        console.log(type);
+        break;
+      case 'artcode':
+        console.log(type);
+        break;
+      case 'place':
+        console.log(type);
+        break;
+      case 'personal':
+        console.log(type);
+        break;
+      case 'object':
+        let objectModal = this.modalCtrl.create(ObjectwrapPage, {
+          wrapId: this.wrapId
+        });
+        objectModal.present();
+        break;
+      default:
+        break;
+    }
+  }
+
+  submitWrap () {
     this.workshop.storeGift();
     this.nav.pop();
   }
 
   wrapComplete () {
-    return typeof(this.challenges) != 'undefined' && this.challenges.length > 0;
+    return typeof(this.workshop.gift.getWrapWithID(this.wrapId)) != 'undefined'
+      && typeof(this.workshop.gift.getWrapWithID(this.wrapId).challenges) != 'undefined'
+      && this.workshop.gift.getWrapWithID(this.wrapId).challenges.length > 0;
   }
   
   cancelWrap () {
+    for (var i = 0; i < this.workshop.gift.wraps.length; i++) {
+      if (this.workshop.gift.wraps[i].id == this.wrapId) {
+        this.workshop.gift.wraps.splice(i, 1);
+      }
+    }
     this.nav.pop();
+  }
+
+  pauseWrap () {
+    if (typeof(this.workshop.gift.getWrapWithID(this.wrapId)) != 'undefined' && !this.wrapComplete()) {
+      for (var i = 0; i < this.workshop.gift.wraps.length; i++) {
+        if (this.workshop.gift.wraps[i].id == this.wrapId) {
+          this.workshop.gift.wraps.splice(i, 1);
+        }
+      }
+    }
+    this.nav.pop();
+  }
+
+  ionViewDidLeave () {
+    if (typeof(this.workshop.gift.getWrapWithID(this.wrapId)) != 'undefined' && !this.wrapComplete()) {
+      for (var i = 0; i < this.workshop.gift.wraps.length; i++) {
+        if (this.workshop.gift.wraps[i].id == this.wrapId) {
+          this.workshop.gift.wraps.splice(i, 1);
+        }
+      }
+    }
   }
 
 }

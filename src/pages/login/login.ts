@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, AlertController, LoadingController, Loading } from 'ionic-angular';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+import { WorkshopServiceProvider } from '../../providers/workshop-service/workshop-service';
 import { HomePage } from '../home/home';
 import { Storage } from '@ionic/storage';
 
@@ -12,7 +13,7 @@ export class LoginPage {
   loading: Loading;
   registerCredentials = { email: '', password: '' };
 
-  constructor(private nav: NavController, private auth: AuthServiceProvider, private alertCtrl: AlertController, private loadingCtrl: LoadingController, public storage: Storage) {
+  constructor(private nav: NavController, private auth: AuthServiceProvider, private alertCtrl: AlertController, private loadingCtrl: LoadingController, public storage: Storage, private workshop: WorkshopServiceProvider) {
     storage.get('loginEmail').then((loginEmail) => {
       this.registerCredentials.email = loginEmail;
     }).catch(
@@ -20,23 +21,25 @@ export class LoginPage {
     );
   }
 
-  public createAccount() {
-    console.log("Registration?");
-  }
-
   public login() {
     this.showLoading();
     this.storage.set('loginEmail', this.registerCredentials.email);
     this.auth.login(this.registerCredentials).subscribe(allowed => {
       if (allowed) {
-        this.nav.setRoot(HomePage);
+        this.workshop.loadObjects(this.auth.currentUser.id).subscribe(data => {
+          console.log(data);
+          this.nav.setRoot(HomePage);
+        },
+        error => {
+          this.showError("Loading objects failed");
+        });
       } else {
         this.showError("Access Denied");
       }
     },
-      error => {
-        this.showError(error);
-      });
+    error => {
+      this.showError(error);
+    });
   }
 
   showLoading() {

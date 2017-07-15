@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
+import { GlobalVarProvider } from '../../providers/global-var/global-var';
 
 export class Gift {
   title: string;
@@ -48,6 +50,14 @@ export class Gift {
     return this.giftcard !== null && this.giftcard.content.length > 0
       && this.giftcard.title.length > 0;
   }
+
+  getWrapWithID (wrapId) {
+    for (let i = 0; i < this.wraps.length; i++) {
+      if (this.wraps[i].id == wrapId) {
+        return this.wraps[i];
+      }
+    }
+  }
 }
 
 export class Wrap {
@@ -55,7 +65,8 @@ export class Wrap {
   title: string;
   challenges: Array<Challenge>;
 
-  constructor(title: string) {
+  constructor(id: number, title: string) {
+    this.id = id;
     this.title = title;
     this.challenges = [];
   }
@@ -98,11 +109,26 @@ export class Giftcard {
   }
 }
 
+export class Object {
+  id: number;
+  title: string;
+  content: string;
+  image: string;
+
+  constructor (id: number, title: string, content: string, image: string) {
+    this.id = id;
+    this.title = title;
+    this.content = content;
+    this.image = image;
+  }
+}
+
 @Injectable()
 export class WorkshopServiceProvider {
   gift: Gift;
+  objects: Array<Object>;
 
-  constructor(public http: Http, private storage: Storage) {
+  constructor(public http: Http, private storage: Storage, private globalVar: GlobalVarProvider) {
     this.gift = null;
     storage.get('workingGift').then((workingGift) => {
       this.gift = new Gift();
@@ -113,7 +139,11 @@ export class WorkshopServiceProvider {
         this.gift.receiver = workingGift.receiver;
       }
       workingGift.wraps.forEach(wrap => {
-        this.gift.wraps.push(new Wrap(wrap.title));
+        var w = new Wrap(wrap.id, wrap.title);
+        for (var i = 0; i < wrap.challenges.length; i++) {
+          w.setChallenge(wrap.challenges[i].type, wrap.challenges[i].task);
+        }
+        this.gift.wraps.push(w);
       });
       workingGift.payloads.forEach(payload => {
         this.gift.payloads.push(new Payload(payload.id, payload.title, payload.content));
@@ -158,4 +188,29 @@ export class WorkshopServiceProvider {
     this.storage.remove('workingGift');
   }
 
+  loadObjects (ownerId) {
+    return Observable.create(observer => {
+      this.http.get(this.globalVar.getObjectsURL(ownerId))
+        .map(response => response.json())
+        .subscribe(data => {
+          this.objects = [];
+          for (let i = 0; i < data.objects.length; i++) {
+            var object = new Object(
+              data.objects[i].ID,
+              data.objects[i].post_title,
+              data.objects[i].post_content,
+              (typeof(data.objects[i].post_image) != 'undefined' ? data.objects[i].post_image : 'http://placehold.it/100x100')
+            );
+            this.objects.push(object);
+          }
+          console.log(this.objects);
+          observer.next(true);
+          observer.complete();
+        },
+        function (error) {
+          observer.next(false);
+          observer.complete();
+        });
+    });
+  }
 }

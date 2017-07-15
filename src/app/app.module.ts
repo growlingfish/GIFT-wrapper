@@ -3,6 +3,10 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { HttpModule } from '@angular/http';
 import { IonicStorageModule } from '@ionic/storage';
+import { Camera } from '@ionic-native/camera';
+import { File } from '@ionic-native/file';
+import { Transfer } from '@ionic-native/transfer';
+import { FilePath } from '@ionic-native/file-path';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -16,6 +20,7 @@ import { PayloadsPage } from '../pages/payloads/payloads';
 import { PayloadPage } from '../pages/payload/payload';
 import { WrapsPage } from '../pages/wraps/wraps';
 import { WrapPage } from '../pages/wrap/wrap';
+import { ObjectwrapPage } from '../pages/objectwrap/objectwrap';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -36,7 +41,8 @@ import { WorkshopServiceProvider } from '../providers/workshop-service/workshop-
     PayloadsPage,
     PayloadPage,
     WrapsPage,
-    WrapPage
+    WrapPage,
+    ObjectwrapPage
   ],
   imports: [
     BrowserModule,
@@ -57,7 +63,8 @@ import { WorkshopServiceProvider } from '../providers/workshop-service/workshop-
     PayloadsPage,
     PayloadPage,
     WrapsPage,
-    WrapPage
+    WrapPage,
+    ObjectwrapPage
   ],
   providers: [
     StatusBar,
@@ -66,6 +73,10 @@ import { WorkshopServiceProvider } from '../providers/workshop-service/workshop-
     AuthServiceProvider,
     GlobalVarProvider,
     WorkshopServiceProvider,
+    Camera,
+    File,
+    Transfer,
+    FilePath,
   ]
 })
 export class AppModule {}
