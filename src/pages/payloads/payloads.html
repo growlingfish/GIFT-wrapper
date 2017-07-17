@@ -7,7 +7,6 @@
 <ion-content padding>
   <ng-container *ngIf="this.workshop.gift.payloadsComplete()">
     <p>You've added enough content to your gift. You can keep adding more, or return to editing other aspects of your gift now.</p>
-    <button ion-button success (click)="this.backToGift()">Back to Gift</button>
   </ng-container>
   <ng-container *ngIf="!this.workshop.gift.payloadsComplete()">
     <p>You need to add at least one piece of content to your gift. This is what the receiver finally experiences when they have unwrapped the gift.</p>
@@ -20,4 +19,7 @@
       <ion-icon name="add-circle" item-start></ion-icon> Add another piece of content
     </button>
   </ion-list>
+  <ng-container *ngIf="this.workshop.gift.payloadsComplete()">
+    <button ion-button success (click)="this.backToGift()">Back to Gift</button>
+  </ng-container>
 </ion-content>

@@ -3,7 +3,7 @@ import { Platform, NavController, NavParams, ViewController, AlertController, Ac
 import { Http, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-import { WorkshopServiceProvider } from '../../providers/workshop-service/workshop-service';
+import { WorkshopServiceProvider, Object } from '../../providers/workshop-service/workshop-service';
 import { GlobalVarProvider } from '../../providers/global-var/global-var';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { Camera } from '@ionic-native/camera';
@@ -22,6 +22,7 @@ export class ObjectwrapPage {
   lastImage: string = null;
   loading: Loading;
   uploadedFilename: string = null;
+  name: string = null;
   description: string = null;
 
   constructor(public platform: Platform, public nav: NavController, public params: NavParams, public viewCtrl: ViewController, private workshop: WorkshopServiceProvider, private alertCtrl: AlertController, private camera: Camera, public actionSheetCtrl: ActionSheetController, private filePath: FilePath, private file: File, public toastCtrl: ToastController, private globalVar: GlobalVarProvider, public loadingCtrl: LoadingController, private transfer: Transfer, private auth: AuthServiceProvider, public http: Http) {
@@ -32,21 +33,39 @@ export class ObjectwrapPage {
     this.viewCtrl.dismiss();
   }
 
+  objectSelected (objectId) {
+    var objectSelected = -1;
+    for (var i = 0; i < this.workshop.gift.getWrapWithID(this.wrapId).challenges.length; i++ ) {
+      if (this.workshop.gift.getWrapWithID(this.wrapId).challenges[i].type == 'object') {
+        if (this.workshop.gift.getWrapWithID(this.wrapId).challenges[i].task == objectId) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
   newObject () {
     let actionSheet = this.actionSheetCtrl.create({
       title: 'Select Image Source',
-      subTitle: 'First you need a photograph of the exhibit: the receiver will use this photograph to find the exhibit',
+      subTitle: 'Choose a photograph of the exhibit',
       buttons: [
         {
           text: 'Load from Library',
           handler: () => {
-            this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY);
+            let navTransition = actionSheet.dismiss();
+            navTransition.then(() => {
+              this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY);
+            });
           }
         },
         {
           text: 'Use Camera',
           handler: () => {
-            this.takePicture(this.camera.PictureSourceType.CAMERA);
+            let navTransition = actionSheet.dismiss();
+            navTransition.then(() => {
+              this.takePicture(this.camera.PictureSourceType.CAMERA);
+            });
           }
         },
         {
@@ -163,13 +182,13 @@ export class ObjectwrapPage {
       console.log(response);
       if (response.success) {
         this.uploadedFilename = response.filename;
-        let prompt = this.alertCtrl.create({
-          title: 'Description',
-          message: "Now enter a short description of where or how to find the exhibit",
+        let namePrompt = this.alertCtrl.create({
+          title: 'Name',
+          message: "Enter the name of the exhibit",
           inputs: [
             {
-              name: 'description',
-              placeholder: 'Description'
+              name: 'name',
+              placeholder: 'Name'
             },
           ],
           buttons: [
@@ -180,15 +199,62 @@ export class ObjectwrapPage {
               }
             },
             {
-              text: 'Save',
+              text: 'Next',
               handler: data => {
-                this.description = data.description;
-                this.finaliseObject();
+                this.name = data.name;
+                let firstNavTransition = namePrompt.dismiss();
+                firstNavTransition.then(() => {
+                  let descriptionPrompt = this.alertCtrl.create({
+                    title: 'Description',
+                    message: "Now enter a short description of the exhibit and where to find it",
+                    inputs: [
+                      {
+                        name: 'description',
+                        placeholder: 'Description'
+                      },
+                    ],
+                    buttons: [
+                      {
+                        text: 'Cancel',
+                        handler: data => {
+                          this.name = null;
+                        }
+                      },
+                      {
+                        text: 'Save',
+                        handler: data => {
+                          this.description = data.description;
+                          let finalNavTransition = namePrompt.dismiss();
+                          finalNavTransition.then(() => {
+                            this.loading = this.loadingCtrl.create({
+                              content: 'Adding exhibit ...',
+                            });
+                            this.loading.present();
+                            this.workshop.finaliseObject(this.name, this.description, this.uploadedFilename).subscribe(added => {
+                              if (added) {
+                                this.workshop.gift.getWrapWithID(this.wrapId).setChallenge('object', added.id);
+                                this.dismiss();
+                              } else {
+                                console.log("Object add failed");
+                              }
+                              this.loading.dismiss();
+                            },
+                            error => {
+                              console.log(error);
+                              this.loading.dismiss();
+                            });
+                          });
+                        }
+                      }
+                    ]
+                  });
+                  descriptionPrompt.present();
+                });
               }
             }
           ]
         });
-        prompt.present();
+        namePrompt.present();
       } else {
         this.presentToast('Error while uploading file.');
       }
@@ -196,30 +262,6 @@ export class ObjectwrapPage {
       this.loading.dismissAll();
       console.log(err);
       this.presentToast('Error while uploading file.');
-    });
-  }
-
-  finaliseObject () {
-    this.loading = this.loadingCtrl.create({
-      content: 'Adding exhibit ...',
-    });
-    this.loading.present();
-
-    return Observable.create(observer => {
-      let body = new URLSearchParams();
-      body.append('filename', this.uploadedFilename);
-      body.append('description', this.description);
-      this.http.post(this.globalVar.getFinaliseObjectURL(), body)
-        .subscribe(data => {
-          console.log(data);
-          observer.next(true);
-          observer.complete();
-        },
-        function (error) {
-          console.log(error);
-          observer.next(false);
-          observer.complete();
-        });
     });
   }
 

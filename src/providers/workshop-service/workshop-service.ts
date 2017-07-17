@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Http } from '@angular/http';
+import { Http, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
 import { GlobalVarProvider } from '../../providers/global-var/global-var';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 
 export class Gift {
   title: string;
@@ -91,7 +92,6 @@ export class Payload {
 export class Challenge {
   type: string;
   task: string;
-  completed: boolean;
 
   constructor (type: string, task: string) {
     this.type = type;
@@ -128,7 +128,7 @@ export class WorkshopServiceProvider {
   gift: Gift;
   objects: Array<Object>;
 
-  constructor(public http: Http, private storage: Storage, private globalVar: GlobalVarProvider) {
+  constructor(public http: Http, private storage: Storage, private globalVar: GlobalVarProvider, private auth: AuthServiceProvider) {
     this.gift = null;
     storage.get('workingGift').then((workingGift) => {
       this.gift = new Gift();
@@ -180,12 +180,81 @@ export class WorkshopServiceProvider {
   }
 
   sendGift () {
-    console.log("send");
+    return Observable.create(observer => {
+      let body = new URLSearchParams();
+      body.append('sender', this.auth.currentUser.id.toString());
+      body.append('gift', JSON.stringify(this.gift));
+      this.http.post(this.globalVar.getSendGiftURL(), body)
+        .map(response => response.json())
+        .subscribe(data => {
+          console.log(data);
+          if (data.success) {
+            observer.next(true);
+            observer.complete();
+          } else {
+            observer.next(false);
+            observer.complete();
+          }
+        },
+        function (error) {
+          console.log(error);
+          observer.next(false);
+          observer.complete();
+        });
+    });
   }
 
   scrapGift () {
     this.gift = null;
     this.storage.remove('workingGift');
+  }
+
+  checkReceiver (email) {
+    return Observable.create(observer => {
+      this.http.get(this.globalVar.getValidateReceiverURL(email))
+        .map(response => response.json())
+        .subscribe(data => {
+          if (data.success) {
+            if (data.exists) {
+              observer.next(true);
+            } else {
+              observer.next(false);
+            }
+            observer.complete();
+          } else {
+            console.log(data);
+            observer.next(false);
+            observer.complete();
+          }
+        },
+        function (error) {
+          console.log(error);
+          observer.next(false);
+          observer.complete();
+        });
+    });
+  }
+
+  setupReceiver (email) {
+    return Observable.create(observer => {
+      this.http.get(this.globalVar.getSetupReceiverURL(email, this.auth.currentUser.id))
+        .map(response => response.json())
+        .subscribe(data => {
+          if (data.success) {
+            observer.next(true);
+            observer.complete();
+          } else {
+            console.log(data);
+            observer.next(false);
+            observer.complete();
+          }
+        },
+        function (error) {
+          console.log(error);
+          observer.next(false);
+          observer.complete();
+        });
+    });
   }
 
   loadObjects (ownerId) {
@@ -209,6 +278,40 @@ export class WorkshopServiceProvider {
         },
         function (error) {
           observer.next(false);
+          observer.complete();
+        });
+    });
+  }
+
+  finaliseObject (name, description, filename) {
+    return Observable.create(observer => {
+      let body = new URLSearchParams();
+      body.append('filename', filename);
+      body.append('name', name);
+      body.append('description', description);
+      body.append('owner', this.auth.currentUser.id.toString());
+      this.http.post(this.globalVar.getFinaliseObjectURL(), body)
+        .map(response => response.json())
+        .subscribe(data => {
+          if (data.success) {
+            var object = new Object(
+              data.objectid,
+              name,
+              description,
+              data.thumbnail
+            );
+            this.objects.unshift(object);
+            observer.next(object);
+            observer.complete();
+          } else {
+            console.log(data);
+            observer.next(null);
+            observer.complete();
+          }
+        },
+        function (error) {
+          console.log(error);
+          observer.next(null);
           observer.complete();
         });
     });

@@ -37,6 +37,10 @@ export class GlobalVarProvider {
     return this.getApiBase() + "validate/receiver/" + email;
   }
 
+  getSetupReceiverURL (email, from) {
+    return this.getApiBase() + "new/receiver/" + email + "/" + from;
+  }
+
   getObjectsURL (userId) {
     return this.getApiBase() + "objects/" + userId;
   }
@@ -47,5 +51,9 @@ export class GlobalVarProvider {
 
   getFinaliseObjectURL () {
     return this.getApiBase() + "new/object/";
+  }
+
+  getSendGiftURL () {
+    return this.getApiBase() + "new/gift/";
   }
 }

@@ -20,7 +20,7 @@
       <p>Add exhibit that isn't listed below.</p>
       <button ion-button clear item-end (click)="newObject()">Choose</button>
     </ion-item> 
-    <ion-item *ngFor="let item of this.workshop.objects">
+    <ion-item *ngFor="let item of this.workshop.objects" [color]="objectSelected(item.id) ? 'secondary' : ''">
       <ion-thumbnail item-start>
         <img src="{{item.image}}" />
       </ion-thumbnail>

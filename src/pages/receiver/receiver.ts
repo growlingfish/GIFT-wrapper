@@ -37,43 +37,47 @@ export class ReceiverPage {
 
   checkReceiver () {
     this.showLoading();
-    this.http.get(this.globalVar.getValidateReceiverURL(this.receiverText))
-      .map(response => response.json())
-      .subscribe(data => {
-        console.log(data);
-        if (data.success) {
-          if(!data.exists) {
-            let confirm = this.alertCtrl.create({
-              title: 'Send an invite',
-              message: "Your recipient hasn't received or created a Gift before. When you send your gift, they will automatically be registered but will still need to choose to download the Unwrapper app before they can receive your gift.",
-              buttons: [
-                {
-                  text: 'Scrap gift',
-                  handler: () => {
-                    this.workshop.scrapGift();
-                    this.nav.popToRoot();
-                  }
-                },
-                {
-                  text: 'OK, carry on',
-                  handler: () => {
-                    console.log("setup new receiver");
-                    this.loading.dismiss();
-                    this.nav.pop();
-                  }
+    this.workshop.checkReceiver(this.receiverText)
+      .subscribe(exists => {
+        if(!exists) {
+          let confirm = this.alertCtrl.create({
+            title: 'Send an invite',
+            message: "Your recipient hasn't received or created a Gift before. When you send your gift, they will automatically be registered but will still need to choose to download the Unwrapper app before they can receive your gift.",
+            buttons: [
+              {
+                text: 'Scrap gift',
+                handler: () => {
+                  this.workshop.scrapGift();
+                  this.nav.popToRoot();
                 }
-              ]
-            });
-            confirm.present();
-          } else {
-            this.nav.pop();
-          }
+              },
+              {
+                text: 'OK, carry on',
+                handler: () => {
+                  this.workshop.setupReceiver(this.receiverText)
+                    .subscribe(done => {
+                      if (!done) {
+                        console.log("Setting up receiver failed");
+                      }
+                      this.loading.dismiss();
+                      this.nav.pop();
+                    },
+                    error => {
+                      console.log("Setting up receiver failed");
+                      this.loading.dismiss();
+                      this.nav.pop();
+                    });
+                }
+              }
+            ]
+          });
+          confirm.present();
         } else {
           this.nav.pop();
         }
       },
-      function (error) {
-        console.log(error);
+      error => {
+        console.log("Validating receiver failed");
         this.nav.pop();
       });
   }

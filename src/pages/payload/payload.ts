@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { WorkshopServiceProvider } from '../../providers/workshop-service/workshop-service';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { Payload } from '../../providers/workshop-service/workshop-service';
 
 @Component({
@@ -12,7 +13,7 @@ export class PayloadPage {
   title: string;
   content: string;
 
-  constructor(public nav: NavController, public navParams: NavParams, private workshop: WorkshopServiceProvider) {
+  constructor(public nav: NavController, public navParams: NavParams, private workshop: WorkshopServiceProvider, private auth: AuthServiceProvider) {
     this.payloadId = this.navParams.get('payloadId');
     if (typeof(this.payloadId) != 'undefined') {
       this.title = this.workshop.gift.payloads[this.payloadId].title;
@@ -29,7 +30,7 @@ export class PayloadPage {
         }
         i++;
       }
-      this.workshop.gift.payloads.push(new Payload(this.payloadId, this.title, this.content));
+      this.workshop.gift.payloads.push(new Payload(this.payloadId, this.auth.currentUser.name + "'s payload started at " + (new Date().toISOString()), this.content));
     } else {
       this.workshop.gift.payloads[this.payloadId].title = this.title;
       this.workshop.gift.payloads[this.payloadId].content = this.content;

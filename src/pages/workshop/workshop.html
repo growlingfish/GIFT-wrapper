@@ -8,7 +8,6 @@
   <ng-container *ngIf="this.workshop.giftIsStarted()">
     <ng-container *ngIf="this.workshop.giftIsFinished()">
       <p>You've added enough components to make a gift. You can keep adding to it, or send the gift straight away.</p>
-      <button ion-button success (click)="this.workshop.sendGift()">Send the Gift</button>
     </ng-container>
     <ng-container *ngIf="!this.workshop.giftIsFinished()">
       <p>You're working on a gift. You need to complete each of the following components of the gift before you can send it.</p>
@@ -40,10 +39,13 @@
         <ion-icon [name]="this.workshop.gift.giftcardComplete() ? 'checkmark-circle' : 'close-circle'" [color]="this.workshop.gift.giftcardComplete() ? 'secondary' : 'danger'" item-end></ion-icon>
       </button>
     </ion-list>
-    <button ion-button danger (click)="scrapGift()">Scrap this Gift</button>
+    <button ion-button color="danger" (click)="scrapGift()">Scrap this Gift</button>
+    <ng-container *ngIf="this.workshop.giftIsFinished()">
+      <button ion-button success (click)="sendGift()">Send the Gift</button>
+    </ng-container>
   </ng-container>
   <ng-container *ngIf="!this.workshop.giftIsStarted()">
     <p>Your workshop is empty.</p>
-    <button ion-button success (click)="this.workshop.startGift()">Start a new Gift</button>
+    <button ion-button (click)="this.workshop.startGift()">Start a new Gift</button>
   </ng-container>
 </ion-content>
