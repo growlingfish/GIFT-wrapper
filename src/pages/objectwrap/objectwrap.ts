@@ -233,6 +233,7 @@ export class ObjectwrapPage {
                             this.workshop.finaliseObject(this.name, this.description, this.uploadedFilename).subscribe(added => {
                               if (added) {
                                 this.workshop.gift.getWrapWithID(this.wrapId).setChallenge('object', added.id);
+                                this.workshop.storeGift();
                                 this.dismiss();
                               } else {
                                 console.log("Object add failed");
@@ -267,6 +268,7 @@ export class ObjectwrapPage {
 
   itemTapped (objectId) {
     this.workshop.gift.getWrapWithID(this.wrapId).setChallenge('object', objectId);
+    this.workshop.storeGift();
     this.dismiss();
   }
 

@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Date</ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="cancelDate()">
+        <span ion-text color="primary" showWhen="ios">Cancel</span>
+        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <p>When can the gift be unwrapped?</p>
+  <ion-item>
+    <ion-label>Start Date</ion-label>
+    <ion-datetime displayFormat="DD MMM YYYY" [(ngModel)]="date"></ion-datetime>
+  </ion-item>
+  <p>
+    <button ion-button (click)="cancelDate()">
+      Cancel
+    </button>
+    <button ion-button color="danger" [disabled]="!dateAdded()" (click)="scrapDate()">
+      Remove
+    </button>
+    <button ion-button color="secondary" (click)="submitDate()">
+      Submit
+    </button>
+  </p>
+</ion-content>

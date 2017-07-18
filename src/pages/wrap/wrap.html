@@ -19,7 +19,7 @@
   </ion-list>
   <p>
     <ng-container *ngIf="wrapComplete()">
-      <button ion-button success (click)="pauseWrap()">Back to Gift</button>
+      <button ion-button success (click)="pauseWrap()">Cancel</button>
     </ng-container>
     <button ion-button color="danger" [disabled]="!wrapComplete()" (click)="cancelWrap()">
       Delete

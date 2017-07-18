@@ -41,19 +41,15 @@ export class WorkshopPage {
       {
         text: 'Send!',
         handler: () => {
-          let navTransition = alert.dismiss();
-          navTransition.then(() => {
-            this.showLoading();
-            this.workshop.sendGift()
-              .subscribe(sent => {
-                console.log(sent);
-                this.workshop.scrapGift();
-                this.navCtrl.popToRoot();
-              },
-              error => {
-                console.log("Sending gift failed");
-              });
-          });
+          this.showLoading();
+          this.workshop.sendGift()
+            .subscribe(sent => {
+              console.log(sent);
+              this.scrapGift();
+            },
+            error => {
+              console.log("Sending gift failed");
+            });
         }
       }
       ]

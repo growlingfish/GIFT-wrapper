@@ -20,6 +20,11 @@ import { PayloadsPage } from '../pages/payloads/payloads';
 import { PayloadPage } from '../pages/payload/payload';
 import { WrapsPage } from '../pages/wraps/wraps';
 import { WrapPage } from '../pages/wrap/wrap';
+import { DatewrapPage } from '../pages/datewrap/datewrap';
+import { KeywrapPage } from '../pages/keywrap/keywrap';
+import { ArtcodewrapPage } from '../pages/artcodewrap/artcodewrap';
+import { PlacewrapPage } from '../pages/placewrap/placewrap';
+import { PersonalwrapPage } from '../pages/personalwrap/personalwrap';
 import { ObjectwrapPage } from '../pages/objectwrap/objectwrap';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -42,6 +47,11 @@ import { WorkshopServiceProvider } from '../providers/workshop-service/workshop-
     PayloadPage,
     WrapsPage,
     WrapPage,
+    DatewrapPage,
+    KeywrapPage,
+    ArtcodewrapPage,
+    PlacewrapPage,
+    PersonalwrapPage,
     ObjectwrapPage
   ],
   imports: [
@@ -64,6 +74,11 @@ import { WorkshopServiceProvider } from '../providers/workshop-service/workshop-
     PayloadPage,
     WrapsPage,
     WrapPage,
+    DatewrapPage,
+    KeywrapPage,
+    ArtcodewrapPage,
+    PlacewrapPage,
+    PersonalwrapPage,
     ObjectwrapPage
   ],
   providers: [

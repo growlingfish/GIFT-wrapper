@@ -2,6 +2,11 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { WorkshopServiceProvider, Wrap, Challenge } from '../../providers/workshop-service/workshop-service';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+import { DatewrapPage } from '../datewrap/datewrap';
+import { KeywrapPage } from '../keywrap/keywrap';
+import { ArtcodewrapPage } from '../artcodewrap/artcodewrap';
+import { PlacewrapPage } from '../placewrap/placewrap';
+import { PersonalwrapPage } from '../personalwrap/personalwrap';
 import { ObjectwrapPage } from '../objectwrap/objectwrap';
 
 class ChallengeType {
@@ -88,19 +93,34 @@ export class WrapPage {
   addChallenge (type) {
     switch (type) {
       case 'date':
-        console.log(type);
+        let dateModal = this.modalCtrl.create(DatewrapPage, {
+          wrapId: this.wrapId
+        });
+        dateModal.present();
         break;
       case 'key':
-        console.log(type);
+        let keyModal = this.modalCtrl.create(KeywrapPage, {
+          wrapId: this.wrapId
+        });
+        keyModal.present();
         break;
       case 'artcode':
-        console.log(type);
+        let artcodeModal = this.modalCtrl.create(ArtcodewrapPage, {
+          wrapId: this.wrapId
+        });
+        artcodeModal.present();
         break;
       case 'place':
-        console.log(type);
+        let placeModal = this.modalCtrl.create(PlacewrapPage, {
+          wrapId: this.wrapId
+        });
+        placeModal.present();
         break;
       case 'personal':
-        console.log(type);
+        let personalModal = this.modalCtrl.create(PersonalwrapPage, {
+          wrapId: this.wrapId
+        });
+        personalModal.present();
         break;
       case 'object':
         let objectModal = this.modalCtrl.create(ObjectwrapPage, {

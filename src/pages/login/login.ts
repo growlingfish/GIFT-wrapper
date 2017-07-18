@@ -27,7 +27,6 @@ export class LoginPage {
     this.auth.login(this.registerCredentials).subscribe(allowed => {
       if (allowed) {
         this.workshop.loadObjects(this.auth.currentUser.id).subscribe(data => {
-          console.log(data);
           this.nav.setRoot(HomePage);
         },
         error => {

@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Artcode</ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="cancelArtcode()">
+        <span ion-text color="primary" showWhen="ios">Cancel</span>
+        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <p>What Artcode needs to be scanned to unwrap the gift?</p>
+  <ion-item>
+    <ion-label>Artcode</ion-label>
+    <ion-input [(ngModel)]="artcode"></ion-input>
+  </ion-item>
+  <p>
+    <button ion-button (click)="cancelArtcode()">
+      Cancel
+    </button> 
+    <button ion-button color="danger" [disabled]="!artcodeAdded()" (click)="scrapArtcode()">
+      Remove
+    </button>
+    <button ion-button color="secondary" (click)="submitArtcode()">
+      Submit
+    </button>
+  </p>
+</ion-content>

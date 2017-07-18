@@ -73,6 +73,12 @@ export class Wrap {
   }
 
   public setChallenge (type: string, task: string) {
+    for (var i = 0; i < this.challenges.length; i++) {
+      if (this.challenges[i].type == type) {
+        this.challenges[i].task = task;
+        return;
+      }
+    }
     this.challenges.push(new Challenge(type, task));
   }
 }
