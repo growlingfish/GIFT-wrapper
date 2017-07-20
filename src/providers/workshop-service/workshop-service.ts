@@ -8,7 +8,8 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 
 export class Gift {
   title: string;
-  receiver: string;
+  receiver: string; // email
+  receiverName: string;
   wraps: Array<Wrap>;
   payloads: Array<Payload>;
   giftcard: Giftcard;
@@ -16,6 +17,7 @@ export class Gift {
   constructor() {
     this.title = null;
     this.receiver = null;
+    this.receiverName = null;
     this.wraps = [];
     this.payloads = [];
     this.giftcard = null;
@@ -36,7 +38,8 @@ export class Gift {
   }
 
   receiverComplete () {
-    return this.receiver !== null && this.receiver.length > 0;
+    return this.receiver !== null && this.receiver.length > 0
+      && this.receiverName !== null && this.receiverName.length > 0;
   }
 
   wrapsComplete () {
@@ -144,6 +147,9 @@ export class WorkshopServiceProvider {
       if (typeof(workingGift.receiver) !== "undefined") {
         this.gift.receiver = workingGift.receiver;
       }
+      if (typeof(workingGift.receiverName) !== "undefined") {
+        this.gift.receiverName = workingGift.receiverName;
+      }
       workingGift.wraps.forEach(wrap => {
         var w = new Wrap(wrap.id, wrap.title);
         for (var i = 0; i < wrap.challenges.length; i++) {
@@ -241,9 +247,9 @@ export class WorkshopServiceProvider {
     });
   }
 
-  setupReceiver (email) {
+  setupReceiver (email, name) {
     return Observable.create(observer => {
-      this.http.get(this.globalVar.getSetupReceiverURL(email, this.auth.currentUser.id))
+      this.http.get(this.globalVar.getSetupReceiverURL(email, name, this.auth.currentUser.id))
         .map(response => response.json())
         .subscribe(data => {
           if (data.success) {

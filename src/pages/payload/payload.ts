@@ -3,6 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { WorkshopServiceProvider } from '../../providers/workshop-service/workshop-service';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { Payload } from '../../providers/workshop-service/workshop-service';
+import { TitlePage } from '../../pages/title/title';
 
 @Component({
   selector: 'page-payload',
@@ -36,7 +37,8 @@ export class PayloadPage {
       this.workshop.gift.payloads[this.payloadId].content = this.content;
     }
     this.workshop.storeGift();
-    this.nav.pop();
+    //this.nav.pop();
+    this.nav.push(TitlePage); 
   }
 
   payloadComplete () {

@@ -5,16 +5,33 @@
 </ion-header>
 
 <ion-content padding>
-  <p>Your gift will be sent with a gift card. The gift card will be the first thing the receiver sees, before they start unwrapping the gift.</p>
-  <ion-item>
-    <ion-textarea placeholder="Enter the gift card text" [(ngModel)]="giftcardText"></ion-textarea>
-  </ion-item>
-  <p>
-    <button ion-button color="danger" (click)="cancelGiftcard()">
-      I can't do this right now
-    </button>
-    <button ion-button [disabled]="!giftcardTextComplete()" (click)="submitGiftcard()">
-      Submit
-    </button>
-  </p>
+  <ion-row>
+    <ion-card>
+      <img src="./assets/card.jpg"/>
+      <ion-card-content>
+        <ion-card-title>
+          Write them a card
+        </ion-card-title>
+        <div>The gift card will be the first thing the receiver sees, before they start unwrapping the gift.</div>
+        <ion-item class="cardtext">
+          <ion-textarea placeholder="Enter the gift card text" [(ngModel)]="giftcardText"></ion-textarea>
+        </ion-item>
+        <div>
+          <button ion-button color="danger" (click)="cancelGiftcard()">
+            I can't do this right now
+          </button>
+          <button ion-button [disabled]="!giftcardTextComplete()" (click)="submitGiftcard()">
+            Submit
+          </button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </ion-row>
+  <ion-row class="logo-row">
+    <ion-col></ion-col>
+    <ion-col width-67>
+      <img src="./assets/white-icon-circle-text-hor.png"/>
+    </ion-col>
+    <ion-col></ion-col>
+  </ion-row>
 </ion-content>

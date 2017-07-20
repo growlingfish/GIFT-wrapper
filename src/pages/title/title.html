@@ -5,16 +5,33 @@
 </ion-header>
 
 <ion-content padding>
-  <p>Enter a title for your gift:</p>
-  <ion-item>
-    <ion-textarea placeholder="Enter the title" [(ngModel)]="titleText"></ion-textarea>
-  </ion-item>
-  <p>
-    <button ion-button color="danger" (click)="cancelTitle()">
-      I can't do this right now
-    </button>
-    <button ion-button [disabled]="!titleComplete()" (click)="submitTitle()">
-      Submit
-    </button>
-  </p>
+  <ion-row>
+    <ion-card>
+      <img src="./assets/tag.jpg"/>
+      <ion-card-content>
+        <ion-card-title>
+          A title
+        </ion-card-title>
+        <div>Finally, enter a short title for the gift:</div>
+        <ion-item class="titletext">
+          <ion-textarea placeholder="Enter the title" [(ngModel)]="titleText"></ion-textarea>
+        </ion-item>
+        <div>
+          <button ion-button color="danger" (click)="cancelTitle()">
+            I can't do this right now
+          </button> 
+          <button ion-button [disabled]="!titleComplete()" (click)="submitTitle()">
+            Submit
+          </button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </ion-row>
+  <ion-row class="logo-row">
+    <ion-col></ion-col>
+    <ion-col width-67>
+      <img src="./assets/white-icon-circle-text-hor.png"/>
+    </ion-col>
+    <ion-col></ion-col>
+  </ion-row>
 </ion-content>

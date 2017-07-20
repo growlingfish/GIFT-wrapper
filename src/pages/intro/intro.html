@@ -1,0 +1,34 @@
+<ion-header> 
+  <ion-navbar>
+    <ion-title>The GIFT Platform</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-fab top right edge>
+    <button ion-fab color="vibrant" (click)="finishIntro()">Skip</button>
+  </ion-fab>
+  <ion-slides pager>
+    <ion-slide>
+      <h2>Welcome!</h2>
+      <div>Swipe left to learn about this app, or tap 'Skip' if you know what you're doing.</div>
+    </ion-slide>
+    <ion-slide>
+      <h2>What is the GIFT Platform?</h2>
+      <div>The GIFT Platform is a set of tools, including this app, that lets you send and receive 'gifts'.</div>
+      <div>It is a service provided by the EU-funded GIFT project, which is investigating ways to combine digital content with real cultural artifacts - museum exhibits, historical sites, and so on - to provide new ways for visitors to engage with heritage.</div>
+    </ion-slide>
+    <ion-slide>
+      <h2>What is this app?</h2>
+      <div>This app lets you send a 'gift' to another user. Gifts in the GIFT Platform are packages of digital content that you create for another user to experience when they are in a particular situation, e.g. near a specific cultural artifact.</div>
+      <div>Using the GIFT Wrapper app you set up that situation, create the digital gift, and send it to the lucky recipient.</div>
+    </ion-slide>
+    <ion-slide>
+      <h2>That's it!</h2>
+      <div>Press the button below to log in and see whether you have any gifts to unwrap.</div>
+      <button ion-button (click)="finishIntro()">
+        Log in
+      </button>
+    </ion-slide>
+  </ion-slides>
+</ion-content>

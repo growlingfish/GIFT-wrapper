@@ -4,6 +4,8 @@ import { WorkshopServiceProvider } from '../../providers/workshop-service/worksh
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { GlobalVarProvider } from '../../providers/global-var/global-var';
+import { HomePage } from '../../pages/home/home';
+import { GiftcardPage } from '../../pages/giftcard/giftcard';
 
 @Component({
   selector: 'page-receiver',
@@ -11,17 +13,19 @@ import { GlobalVarProvider } from '../../providers/global-var/global-var';
 })
 export class ReceiverPage {
   receiverText: string;
+  receiverName: string;
   loading: Loading;
 
   constructor(public nav: NavController, public navParams: NavParams, public alertCtrl: AlertController, public loadingCtrl: LoadingController, private globalVar: GlobalVarProvider, private workshop: WorkshopServiceProvider, public http: Http) {
     if (this.workshop.gift.receiverComplete()) {
       this.receiverText = this.workshop.gift.receiver;
+      this.receiverName = this.workshop.gift.receiverName;
     }
   }
 
   receiverValid () {
     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return !re.test(this.receiverText);
+    return !re.test(this.receiverText) && (this.receiverName != null && this.receiverName.length > 0);
   }
 
   cancelReceiver () {
@@ -30,6 +34,7 @@ export class ReceiverPage {
 
   submitReceiver () {
     this.workshop.gift.receiver = this.receiverText;
+    this.workshop.gift.receiverName = this.receiverName;
     this.workshop.storeGift();
 
     this.checkReceiver();
@@ -48,19 +53,21 @@ export class ReceiverPage {
                 text: 'Scrap gift',
                 handler: () => {
                   this.workshop.scrapGift();
-                  this.nav.popToRoot();
+                  //this.nav.popToRoot();
+                  this.nav.setRoot(HomePage);
                 }
               },
               {
                 text: 'OK, carry on',
                 handler: () => {
-                  this.workshop.setupReceiver(this.receiverText)
+                  this.workshop.setupReceiver(this.receiverText, this.receiverName)
                     .subscribe(done => {
                       if (!done) {
                         console.log("Setting up receiver failed");
                       }
                       this.loading.dismiss();
-                      this.nav.pop();
+                      //this.nav.pop();
+                      this.nav.push(GiftcardPage);
                     },
                     error => {
                       console.log("Setting up receiver failed");
@@ -73,7 +80,8 @@ export class ReceiverPage {
           });
           confirm.present();
         } else {
-          this.nav.pop();
+          //this.nav.pop();
+          this.nav.push(GiftcardPage);
         }
       },
       error => {

@@ -26,6 +26,8 @@ import { ArtcodewrapPage } from '../pages/artcodewrap/artcodewrap';
 import { PlacewrapPage } from '../pages/placewrap/placewrap';
 import { PersonalwrapPage } from '../pages/personalwrap/personalwrap';
 import { ObjectwrapPage } from '../pages/objectwrap/objectwrap';
+import { IntroPage } from '../pages/intro/intro';
+import { ProfilePage } from '../pages/profile/profile';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -52,7 +54,9 @@ import { WorkshopServiceProvider } from '../providers/workshop-service/workshop-
     ArtcodewrapPage,
     PlacewrapPage,
     PersonalwrapPage,
-    ObjectwrapPage
+    ObjectwrapPage,
+    IntroPage,
+    ProfilePage
   ],
   imports: [
     BrowserModule,
@@ -79,7 +83,9 @@ import { WorkshopServiceProvider } from '../providers/workshop-service/workshop-
     ArtcodewrapPage,
     PlacewrapPage,
     PersonalwrapPage,
-    ObjectwrapPage
+    ObjectwrapPage,
+    IntroPage,
+    ProfilePage
   ],
   providers: [
     StatusBar,

@@ -5,16 +5,37 @@
 </ion-header>
 
 <ion-content padding>
-  <p>Enter the email address of the person who will receive your gift:</p>
-  <ion-item>
-    <ion-input type="email" email placeholder="Enter the email address" [(ngModel)]="receiverText"></ion-input>
-  </ion-item>
-  <p>
-    <button ion-button color="danger" (click)="cancelReceiver()">
-      I can't do this right now
-    </button>
-    <button ion-button [disabled]="receiverValid()" (click)="submitReceiver()">
-      Submit
-    </button>
-  </p>
+  <ion-row>
+    <ion-card>
+      <ion-card-content>
+        <ion-card-title>
+          Who are you making the gift for?
+        </ion-card-title>
+        <ion-item class="recipientname">
+          <ion-label>Name:</ion-label>
+          <ion-input name [(ngModel)]="receiverName"></ion-input>
+        </ion-item>
+        <ion-item class="recipientemail">
+          <ion-label>Email address:</ion-label>
+          <ion-input type="email" email [(ngModel)]="receiverText"></ion-input>
+        </ion-item>
+        <div>
+          <button ion-button color="danger" (click)="cancelReceiver()">
+            Cancel
+          </button>
+          <button ion-button [disabled]="receiverValid()" (click)="submitReceiver()">
+            Submit
+          </button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </ion-row>
+  <ion-row class="logo-row">
+    <ion-col></ion-col>
+    <ion-col width-67>
+      <img src="./assets/white-icon-circle-text-hor.png"/>
+    </ion-col>
+    <ion-col></ion-col>
+  </ion-row>
+  
 </ion-content>

@@ -7,9 +7,24 @@
   </ion-navbar>
 </ion-header>
 
-
 <ion-content padding>
-  <h3>Log out of your Workshop</h3>
-
-  <button ion-button color="danger" (click)="logout()">Log out</button>
+  <ion-row class="logo-row">
+    <ion-col></ion-col>
+    <ion-col width-67>
+      <img src="./assets/white-icon-circle-text.png"/>
+    </ion-col>
+    <ion-col></ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-card (click)="logout()">
+      <ion-card-content>
+        <ion-card-title>
+          Log out?
+        </ion-card-title>
+        <div>
+          Tap here to log out of the Wrapper app.
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </ion-row>
 </ion-content>

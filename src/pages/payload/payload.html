@@ -1,20 +1,37 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>{{this.title}}</ion-title>
+    <ion-title>The gift</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <p>Enter the text that the receiver will be able to read when the gift is unwrapped.</p>
-  <ion-item>
-    <ion-textarea placeholder="Enter the content" [(ngModel)]="content"></ion-textarea>
-  </ion-item>
-  <p>
-    <button ion-button color="danger" (click)="cancelPayload()">
-      I can't do this right now
-    </button> 
-    <button ion-button [disabled]="!payloadComplete()" (click)="submitPayload()">
-      Submit
-    </button>
-  </p>
+  <ion-row>
+    <ion-card>
+      <img src="./assets/payload.jpg"/>
+      <ion-card-content>
+        <ion-card-title>
+          What is in your gift?
+        </ion-card-title>
+        <div>Enter the text that you want the receiver to read when they have found the museum exhibit.</div>
+        <ion-item class="payloadtext">
+          <ion-textarea placeholder="Enter the content" [(ngModel)]="content"></ion-textarea>
+        </ion-item>
+        <div>
+          <button ion-button color="danger" (click)="cancelPayload()">
+            I can't do this right now
+          </button> 
+          <button ion-button [disabled]="!payloadComplete()" (click)="submitPayload()">
+            Submit
+          </button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </ion-row>
+  <ion-row class="logo-row">
+    <ion-col></ion-col>
+    <ion-col width-67>
+      <img src="./assets/white-icon-circle-text-hor.png"/>
+    </ion-col>
+    <ion-col></ion-col>
+  </ion-row>
 </ion-content>

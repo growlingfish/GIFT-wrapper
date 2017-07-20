@@ -3,14 +3,35 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Home</ion-title>
+    <ion-title>GIFT Wrapper</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <h3>Gifting.Digital</h3>
-
-  <p>Hello {{this.currentUser.name}}</p>
-
-  <button ion-button secondary (click)="openWorkshop()">Open your Workshop</button>
+  <ion-row>
+    <ion-card>
+      <img src="./assets/crowd.jpg"/>
+      <ion-card-content>
+        <ion-card-title>
+          The recipient
+        </ion-card-title>
+        <div>Hello {{this.auth.currentUser.name}}. Who are you making your gift for?</div>
+        <ion-list>
+          <ion-item (click)="chooseFamiliar()">
+            <h2>Someone I know</h2>
+          </ion-item>
+          <ion-item (click)="chooseStranger()">
+            <h2>Someone unknown</h2>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+  </ion-row>
+  <ion-row class="logo-row">
+    <ion-col></ion-col>
+    <ion-col width-67>
+      <img src="./assets/white-icon-circle-text-hor.png"/>
+    </ion-col>
+    <ion-col></ion-col>
+  </ion-row>
 </ion-content>

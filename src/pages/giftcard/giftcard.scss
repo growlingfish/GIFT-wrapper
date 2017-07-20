@@ -1,3 +1,18 @@
 page-giftcard {
+    ion-content {
+        background: url('../assets/background.jpg');
+        background-size: cover;
+    }
 
+    ion-card, ion-card-content, ion-card-content p, .card, .card-md, .card-ios {
+        @include alpha-background-color(rgba(white, 0.6), white);
+    }
+
+    .logo-row {
+        margin-top: 20px;
+    }
+
+    .cardtext {
+        margin: 15px 0;
+    }
 }

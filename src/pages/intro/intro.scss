@@ -1,0 +1,15 @@
+page-intro {
+    ion-content {
+        background: url('../assets/background.jpg');
+        background-size: cover;
+    }
+
+    ion-slide {
+        @include alpha-background-color(rgba(white, 0.8), white);
+        padding: 40px;
+    }
+
+    ion-slide button, ion-slide .button-md, ion-slide .button-ios, ion-slide .button {
+        margin-top: 15px;
+    }
+}

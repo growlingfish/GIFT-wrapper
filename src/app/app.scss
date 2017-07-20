@@ -14,3 +14,11 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+@mixin alpha-background-color($color, $background) {
+    $percent: alpha($color) * 100%;
+    $opaque: opacify($color, 1);
+    $solid-color: mix($opaque, $background, $percent);
+    background-color: $solid-color;
+    background-color: $color;
+}

@@ -1,4 +1,4 @@
-page-title {
+page-profile {
     ion-content {
         background: url('../assets/background.jpg');
         background-size: cover;
@@ -8,11 +8,11 @@ page-title {
         @include alpha-background-color(rgba(white, 0.6), white);
     }
 
-    .logo-row {
-        margin-top: 20px;
+    .profile {
+        @include alpha-background-color(rgba(white, 1.0), white);
     }
 
-    .titletext {
-        margin: 15px 0;
+    .logo-row {
+        margin-top: 20px;
     }
 }
