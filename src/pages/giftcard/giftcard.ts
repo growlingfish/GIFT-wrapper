@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
-import { WorkshopServiceProvider } from '../../providers/workshop-service/workshop-service';
+import { NavController, NavParams, ModalController } from 'ionic-angular';
+import { WorkshopServiceProvider, Wrap } from '../../providers/workshop-service/workshop-service';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { GlobalVarProvider } from '../../providers/global-var/global-var';
 import { Giftcard } from '../../providers/workshop-service/workshop-service';
 import { PayloadPage } from '../payload/payload'; 
+import { ObjectwrapPage } from '../objectwrap/objectwrap'; 
 
 @Component({
   selector: 'page-giftcard',
@@ -13,7 +14,16 @@ import { PayloadPage } from '../payload/payload';
 export class GiftcardPage {
   giftcardText: string;
 
-  constructor(public nav: NavController, public navParams: NavParams, private workshop: WorkshopServiceProvider, private auth: AuthServiceProvider, private globalVar: GlobalVarProvider) {
+  constructor(public nav: NavController, public navParams: NavParams, private workshop: WorkshopServiceProvider, private auth: AuthServiceProvider, private globalVar: GlobalVarProvider, public modalCtrl: ModalController) {
+    /* For Sprint */
+    if (!this.objectComplete()) {
+      this.workshop.gift.wraps.push(new Wrap(0, this.auth.currentUser.name + "'s wrap started at " + (new Date().toISOString())));
+      let objectModal = this.modalCtrl.create(ObjectwrapPage, {
+        wrapId: 0
+      });
+      objectModal.present();
+    }
+    
     if (this.workshop.gift.giftcardComplete()) {
       this.giftcardText = this.workshop.gift.giftcard.content;
     } else {
@@ -23,6 +33,17 @@ export class GiftcardPage {
         this.giftcardText = "Hey " + this.workshop.gift.receiverName + " - I wanted to give you ...";
       }
     }
+  }
+
+  objectComplete () {
+    for (var i = 0; i < this.workshop.gift.wraps.length; i++) {
+      for (var j = 0; j < this.workshop.gift.wraps[i].challenges.length; j++) {
+        if (this.workshop.gift.wraps[i].challenges[j].type == 'object') {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   cancelGiftcard () {
