@@ -20,11 +20,11 @@
           <ion-input type="email" email [(ngModel)]="receiverText"></ion-input>
         </ion-item>
         <div>
-          <button ion-button color="danger" (click)="cancelReceiver()">
-            Cancel
-          </button>
           <button ion-button [disabled]="receiverValid()" (click)="submitReceiver()">
             Submit
+          </button>
+          <button ion-button color="danger" (click)="cancelReceiver()">
+            Cancel
           </button>
         </div>
       </ion-card-content>

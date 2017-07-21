@@ -5,7 +5,7 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { GlobalVarProvider } from '../../providers/global-var/global-var';
 import { HomePage } from '../../pages/home/home';
-import { GiftcardPage } from '../../pages/giftcard/giftcard';
+import { TitlePage } from '../../pages/title/title';
 
 @Component({
   selector: 'page-receiver',
@@ -67,7 +67,8 @@ export class ReceiverPage {
                       }
                       this.loading.dismiss();
                       //this.nav.pop();
-                      this.nav.push(GiftcardPage);
+                      
+                      this.nav.push(TitlePage); 
                     },
                     error => {
                       console.log("Setting up receiver failed");
@@ -81,7 +82,7 @@ export class ReceiverPage {
           confirm.present();
         } else {
           //this.nav.pop();
-          this.nav.push(GiftcardPage);
+          this.nav.push(TitlePage); 
         }
       },
       error => {

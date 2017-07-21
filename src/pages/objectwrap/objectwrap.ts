@@ -202,6 +202,7 @@ export class ObjectwrapPage {
               text: 'Next',
               handler: data => {
                 this.name = data.name;
+                this.workshop.gift.title = this.name;
                 let firstNavTransition = namePrompt.dismiss();
                 firstNavTransition.then(() => {
                   let descriptionPrompt = this.alertCtrl.create({
@@ -218,6 +219,7 @@ export class ObjectwrapPage {
                         text: 'Cancel',
                         handler: data => {
                           this.name = null;
+                          this.workshop.gift.title = null;
                         }
                       },
                       {

@@ -1,28 +1,28 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Title</ion-title>
+    <ion-title>A new name</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
   <ion-row>
     <ion-card>
-      <img src="./assets/tag.jpg"/>
+      <img [src]="this.getObjectImage()"/>
       <ion-card-content>
         <ion-card-title>
-          A title
+          A new name
         </ion-card-title>
-        <div>Finally, enter a short title for the gift:</div>
+        <div>If <em>you</em> could name the exhibit, what would it be?</div>
         <ion-item class="titletext">
-          <ion-textarea placeholder="Enter the title" [(ngModel)]="titleText"></ion-textarea>
+          <ion-textarea placeholder="Enter the name" [(ngModel)]="titleText"></ion-textarea>
         </ion-item>
         <div>
-          <button ion-button color="danger" (click)="cancelTitle()">
-            I can't do this right now
-          </button> 
           <button ion-button [disabled]="!titleComplete()" (click)="submitTitle()">
             Submit
           </button>
+          <button ion-button color="danger" (click)="cancelTitle()">
+            Back
+          </button> 
         </div>
       </ion-card-content>
     </ion-card>

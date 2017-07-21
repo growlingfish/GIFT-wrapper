@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
-import { WorkshopServiceProvider } from '../../providers/workshop-service/workshop-service';
-import { HomePage } from '../../pages/home/home';
-import { LogoutPage } from '../../pages/logout/logout';
+import { NavController, NavParams, ModalController } from 'ionic-angular';
+import { WorkshopServiceProvider, Wrap } from '../../providers/workshop-service/workshop-service';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+import { GiftcardPage } from '../../pages/giftcard/giftcard';
+import { ObjectwrapPage } from '../objectwrap/objectwrap'; 
 
 @Component({
   selector: 'page-title',
@@ -10,11 +11,25 @@ import { LogoutPage } from '../../pages/logout/logout';
 })
 export class TitlePage {
   titleText: string;
-  loading: Loading;
 
-  constructor(public nav: NavController, public navParams: NavParams, private workshop: WorkshopServiceProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
+  constructor(public nav: NavController, public navParams: NavParams, private workshop: WorkshopServiceProvider, private auth: AuthServiceProvider, public modalCtrl: ModalController) {
     if (this.workshop.gift.titleComplete()) {
       this.titleText = this.workshop.gift.title;
+    }
+
+    /* For Sprint */
+    if (!this.objectComplete()) {
+      this.workshop.gift.wraps.push(new Wrap(0, this.auth.currentUser.name + "'s wrap started at " + (new Date().toISOString())));
+      let objectModal = this.modalCtrl.create(ObjectwrapPage, {
+        wrapId: 0
+      });
+      objectModal.onDidDismiss(data => {
+        if (typeof(this.workshop.gift.title) != 'undefined' && this.workshop.gift.title != null) {
+          this.titleText = this.workshop.gift.title;
+          this.nav.push(GiftcardPage);
+        }
+      });
+      objectModal.present();
     }
   }
  
@@ -26,71 +41,37 @@ export class TitlePage {
     this.workshop.gift.title = this.titleText;
     this.workshop.storeGift();
     //this.nav.pop();
-    /* For Sprint */
-    this.sendGift();
+    this.nav.push(GiftcardPage);
   }
 
   titleComplete () {
     return typeof(this.titleText) != 'undefined' && this.titleText.length > 0;
   }
 
-  sendGift () {
-    let alert = this.alertCtrl.create({
-    title: 'Confirm',
-    message: 'Once you have sent your gift you cannot change or recall it. Do you want to send?',
-    buttons: [
-      {
-        text: 'Cancel',
-        role: 'cancel',
-        handler: () => {
-          console.log('Cancel clicked');
-        }
-      },
-      {
-        text: 'Send!',
-        handler: () => {
-          this.showLoading();
-          this.workshop.sendGift()
-            .subscribe(sent => {
-              console.log(sent);
-              this.workshop.scrapGift();
-              let another = this.alertCtrl.create({
-                title: 'Another?',
-                message: 'Would you like to keep creating more gifts?',
-                buttons: [
-                  {
-                    text: 'No, thanks',
-                    role: 'cancel',
-                    handler: () => {
-                      this.nav.setRoot(LogoutPage);
-                    }
-                  },
-                  {
-                    text: 'Yes!',
-                    handler: () => {
-                      this.nav.setRoot(HomePage);
-                    }
-                  }
-                ]
-              });
-              another.present();
-            },
-            error => {
-              console.log("Sending gift failed");
-            });
+  objectComplete () {
+    for (var i = 0; i < this.workshop.gift.wraps.length; i++) {
+      for (var j = 0; j < this.workshop.gift.wraps[i].challenges.length; j++) {
+        if (this.workshop.gift.wraps[i].challenges[j].type == 'object') {
+          return true;
         }
       }
-      ]
-    });
-    alert.present();
+    }
+    return false;
   }
 
-  showLoading() {
-    this.loading = this.loadingCtrl.create({
-      content: 'Please wait...',
-      dismissOnPageChange: true
-    });
-    this.loading.present();
+  getObjectImage () {
+    for (var i = 0; i < this.workshop.gift.wraps.length; i++) {
+      for (var j = 0; j < this.workshop.gift.wraps[i].challenges.length; j++) {
+        if (this.workshop.gift.wraps[i].challenges[j].type == 'object') {
+          for (var k = 0; k < this.workshop.objects.length; k++) {
+            if (this.workshop.objects[k].id == parseInt(this.workshop.gift.wraps[i].challenges[j].task)) {
+              return this.workshop.objects[k].image;
+            }
+          }
+        }
+      }
+    }
+    return './assets/tag.jpg';
   }
 
 }
