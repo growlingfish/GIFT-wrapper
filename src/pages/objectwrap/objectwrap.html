@@ -29,6 +29,7 @@
         <img src="{{item.image}}" />
       </ion-thumbnail>
       <h2>{{item.title}}</h2>
+      <p [innerHTML]="item.content" text-wrap></p>
       <button ion-button clear item-end (click)="itemTapped(item.id)">Choose</button>
     </ion-item> 
   </ion-list>

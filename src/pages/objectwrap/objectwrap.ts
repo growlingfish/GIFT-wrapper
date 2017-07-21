@@ -184,7 +184,7 @@ export class ObjectwrapPage {
         this.uploadedFilename = response.filename;
         let namePrompt = this.alertCtrl.create({
           title: 'Name',
-          message: "Enter the name of the exhibit",
+          message: "What is the name of the exhibit?",
           inputs: [
             {
               name: 'name',
@@ -207,11 +207,11 @@ export class ObjectwrapPage {
                 firstNavTransition.then(() => {
                   let descriptionPrompt = this.alertCtrl.create({
                     title: 'Description',
-                    message: "Now enter a short description of the exhibit and where to find it",
+                    message: "It is important to give the person receiving your gift some directions to the object in the museum",
                     inputs: [
                       {
                         name: 'description',
-                        placeholder: 'Description'
+                        placeholder: 'Directions'
                       },
                     ],
                     buttons: [
