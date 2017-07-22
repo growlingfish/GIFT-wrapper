@@ -7,12 +7,12 @@
 <ion-content padding>
   <ion-row>
     <ion-card>
-      <img src="./assets/payload.jpg"/>
+      <img [src]="this.getObjectImage()" />
       <ion-card-content>
         <ion-card-title>
           What is in your gift?
         </ion-card-title>
-        <div>Enter the text that you want the receiver to read when they have found the museum exhibit.</div>
+        <div>Write a message for {{this.getReceiverName()}} about this part of their gift when they have found it in the museum.</div>
         <ion-item class="payloadtext">
           <ion-textarea placeholder="Enter the content" [(ngModel)]="content"></ion-textarea>
         </ion-item>

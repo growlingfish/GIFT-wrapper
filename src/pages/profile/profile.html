@@ -5,15 +5,32 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-row>
-    <ion-card>
-      <ion-card-content>
-        <div>
-          This is where the user chooses what sort of a "stranger" they are sending to, somehow.
-        </div>
-      </ion-card-content>
-    </ion-card>
-  </ion-row>
+  <ion-card>
+    <ion-card-content>
+      <ion-card-title>
+        Choose a recipient
+      </ion-card-title>
+      <div>
+        Who will you make a gift for today?
+      </div>
+    </ion-card-content>
+  </ion-card>
+  <ion-card (click)="chooseLocal()">
+    <img src="./assets/local.jpg" />
+    <ion-card-content>
+      <div>
+        A local
+      </div>
+    </ion-card-content>
+  </ion-card>
+  <ion-card (click)="chooseOutOfTown()">
+    <img src="./assets/outoftown.jpg" />
+    <ion-card-content>
+      <div>
+        From out of town
+      </div>
+    </ion-card-content>
+  </ion-card>
   <ion-row class="logo-row">
     <ion-col></ion-col>
     <ion-col width-67>

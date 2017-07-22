@@ -10,7 +10,6 @@
 <ion-content padding>
   <ion-row>
     <ion-card>
-      <img src="./assets/crowd.jpg"/>
       <ion-card-content>
         <ion-card-title>
           The recipient
@@ -18,10 +17,20 @@
         <div>Hello {{this.auth.currentUser.name}}. Who are you making your gift for?</div>
         <ion-list>
           <ion-item (click)="chooseFamiliar()">
+            <ion-thumbnail item-start>
+              <img src="./assets/familiar.jpg" />
+            </ion-thumbnail>
             <h2>Someone I know</h2>
+            <p>Any more text here?</p>
+            <button ion-button clear item-end (click)="chooseFamiliar()">Choose</button>
           </ion-item>
           <ion-item (click)="chooseStranger()">
+            <ion-thumbnail item-start>
+              <img src="./assets/stranger.jpg" />
+            </ion-thumbnail>
             <h2>Someone unknown</h2>
+            <p>Any more text here?</p>
+            <button ion-button clear item-end (click)="chooseStranger()">Choose</button>
           </ion-item>
         </ion-list>
       </ion-card-content>

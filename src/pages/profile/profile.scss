@@ -4,8 +4,12 @@ page-profile {
         background-size: cover;
     }
 
-    ion-card, ion-card-content, ion-card-content p, .card, .card-md, .card-ios {
+    ion-card, ion-card-content, .card, .card-md, .card-ios {
         @include alpha-background-color(rgba(white, 0.6), white);
+    }
+
+    ion-card-content p {
+        @include alpha-background-color(rgba(white, 0.0), white);
     }
 
     .profile {

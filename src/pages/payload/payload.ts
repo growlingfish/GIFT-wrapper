@@ -104,4 +104,27 @@ export class PayloadPage {
     this.loading.present();
   }
 
+  getObjectImage () {
+    if (this.workshop.gift != null && this.workshop.gift.wraps != null) {
+      for (var i = 0; i < this.workshop.gift.wraps.length; i++) {
+        for (var j = 0; j < this.workshop.gift.wraps[i].challenges.length; j++) {
+          if (this.workshop.gift.wraps[i].challenges[j].type == 'object') {
+            for (var k = 0; k < this.workshop.objects.length; k++) {
+              if (this.workshop.objects[k].id == parseInt(this.workshop.gift.wraps[i].challenges[j].task)) {
+                return this.workshop.objects[k].image;
+              }
+            }
+          }
+        }
+      }
+    }
+    return './assets/tag.jpg';
+  }
+
+  getReceiverName () {
+    if (this.workshop.gift != null && this.workshop.gift.receiverName != null) {
+      return this.workshop.gift.receiverName;
+    }
+    return 'a Visitor';
+  }
 }
