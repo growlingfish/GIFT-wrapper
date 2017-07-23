@@ -48,6 +48,31 @@ export class AuthServiceProvider {
     }
   }
 
+  public register (credentials, name) {
+    if (credentials.email === null || credentials.password === null || name === null) {
+      return Observable.throw("Please insert credentials");
+    } else {
+      // don't have the data yet
+      return Observable.create(observer => {
+        this.http.get(this.globalVar.getRegisterURL(credentials.email, name, credentials.password))
+          .map(response => response.json())
+          .subscribe(data => {
+            var authed = false;
+            if (typeof data.success !== 'undefined' && data.success) {
+              this.currentUser = new User(name, credentials.email, data.new.id);
+              authed = true;
+            }
+            observer.next(authed);
+            observer.complete();
+          },
+          function (error) {
+            observer.next(false);
+            observer.complete();
+          });
+      });
+    }
+  }
+
   public getUserInfo() : User {
     return this.currentUser;
   }

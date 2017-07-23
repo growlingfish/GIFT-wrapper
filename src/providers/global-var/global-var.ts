@@ -36,6 +36,10 @@ export class GlobalVarProvider {
     return this.getApiBase() + "auth/" + user + "/" + pass;
   }
 
+  getRegisterURL (user, name, pass) {
+    return this.getApiBase() + "new/sender/" + user + "/" + name + "/" + pass;
+  }
+
   getValidateReceiverURL (email) {
     return this.getApiBase() + "validate/receiver/" + email;
   }

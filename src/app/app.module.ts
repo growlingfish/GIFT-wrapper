@@ -28,6 +28,7 @@ import { PersonalwrapPage } from '../pages/personalwrap/personalwrap';
 import { ObjectwrapPage } from '../pages/objectwrap/objectwrap';
 import { IntroPage } from '../pages/intro/intro';
 import { ProfilePage } from '../pages/profile/profile';
+import { RegisterPage } from '../pages/register/register';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -56,7 +57,8 @@ import { WorkshopServiceProvider } from '../providers/workshop-service/workshop-
     PersonalwrapPage,
     ObjectwrapPage,
     IntroPage,
-    ProfilePage
+    ProfilePage,
+    RegisterPage
   ],
   imports: [
     BrowserModule,
@@ -85,7 +87,8 @@ import { WorkshopServiceProvider } from '../providers/workshop-service/workshop-
     PersonalwrapPage,
     ObjectwrapPage,
     IntroPage,
-    ProfilePage
+    ProfilePage,
+    RegisterPage
   ],
   providers: [
     StatusBar,

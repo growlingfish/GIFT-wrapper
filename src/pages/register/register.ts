@@ -3,38 +3,32 @@ import { NavController, AlertController, LoadingController, Loading } from 'ioni
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { WorkshopServiceProvider } from '../../providers/workshop-service/workshop-service';
 import { HomePage } from '../home/home';
-import { RegisterPage } from '../register/register';
 import { Storage } from '@ionic/storage';
 
 @Component({
-  selector: 'page-login',
-  templateUrl: 'login.html',
+  selector: 'page-register',
+  templateUrl: 'register.html',
 })
-export class LoginPage {
+export class RegisterPage {
   loading: Loading;
   registerCredentials = { email: '', password: '' };
+  name: string;
 
-  constructor(private nav: NavController, private auth: AuthServiceProvider, private alertCtrl: AlertController, private loadingCtrl: LoadingController, public storage: Storage, private workshop: WorkshopServiceProvider) {
-    storage.get('loginEmail').then((loginEmail) => {
-      this.registerCredentials.email = loginEmail;
-    }).catch(
-      console.log.bind(console)
-    );
-  }
+  constructor(private nav: NavController, private auth: AuthServiceProvider, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private workshop: WorkshopServiceProvider, public storage: Storage) {}
 
-  public login() {
+  public register () {
     this.showLoading();
     this.storage.set('loginEmail', this.registerCredentials.email);
-    this.auth.login(this.registerCredentials).subscribe(allowed => {
-      if (allowed) {
+    this.auth.register(this.registerCredentials, this.name).subscribe(success => {
+      if (success) {
         this.workshop.loadObjects(this.auth.currentUser.id).subscribe(data => {
           this.nav.setRoot(HomePage);
         },
         error => {
-          this.showError("Loading objects failed");
+          this.showError("Registration failed");
         });
       } else {
-        this.showError("Access Denied");
+        this.showError("User already registered");
       }
     },
     error => {
@@ -61,7 +55,4 @@ export class LoginPage {
     alert.present(prompt);
   }
 
-  register () {
-    this.nav.setRoot(RegisterPage);
-  }
 }

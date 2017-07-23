@@ -16,20 +16,20 @@
         </ion-card-title>
         <div>Hello {{this.auth.currentUser.name}}. Who are you making your gift for?</div>
         <ion-list>
-          <ion-item (click)="chooseFamiliar()">
+          <ion-item text-wrap>
             <ion-thumbnail item-start>
               <img src="./assets/familiar.jpg" />
             </ion-thumbnail>
-            <h2>Someone I know</h2>
-            <p>Any more text here?</p>
+            <h2 text-wrap>Someone I know</h2>
+            <p text-wrap>Any more text here?</p>
             <button ion-button clear item-end (click)="chooseFamiliar()">Choose</button>
           </ion-item>
-          <ion-item (click)="chooseStranger()">
+          <ion-item text-wrap>
             <ion-thumbnail item-start>
               <img src="./assets/stranger.jpg" />
             </ion-thumbnail>
-            <h2>Someone unknown</h2>
-            <p>Any more text here?</p>
+            <h2 text-wrap>Someone unknown</h2>
+            <p text-wrap>Any more text here?</p>
             <button ion-button clear item-end (click)="chooseStranger()">Choose</button>
           </ion-item>
         </ion-list>

@@ -1,6 +1,5 @@
-page-login {
-
-  ion-content {
+page-register {
+ ion-content {
     background: url('../assets/background.jpg');
     background-size: cover;
   }
@@ -35,10 +34,6 @@ page-login {
       margin: 0px 16px 0px 16px;
       padding-top: 5px;
     }
-    .register-col {
-      margin: 0px 16px 0px 16px;
-      padding-bottom: 20px;
-    }
 
     .item-inner {
       border-bottom-color: #ffffff !important;
@@ -56,5 +51,4 @@ page-login {
       font-size: 0.6em;
     }
   }
-
 }
