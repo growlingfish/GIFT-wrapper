@@ -13,22 +13,22 @@
 <ion-content padding>
   <ion-item>
     <h2>Find an exhibit</h2>
-    <p>Which museum exhibit would you like to include in your gift?</p>
+    <p text-wrap>Which museum exhibit would you like to include in your gift?</p>
   </ion-item>
   <ion-list>
     <ion-item>
       <ion-thumbnail item-start>
         <img src="http://placehold.it/100x100" />
       </ion-thumbnail>
-      <h2>Add a new exhibit</h2>
-      <p text-wrap>Add exhibit that isn't listed below.</p>
+      <h2 text-wrap>Add a new exhibit</h2>
+      <p text-wrap>Photograph an object of your choosing that means something to your person.</p>
       <button ion-button clear item-end (click)="newObject()">Choose</button>
     </ion-item> 
     <ion-item *ngFor="let item of this.workshop.objects" [color]="objectSelected(item.id) ? 'secondary' : ''">
       <ion-thumbnail item-start>
         <img src="{{item.image}}" />
       </ion-thumbnail>
-      <h2>{{item.title}}</h2>
+      <h2 text-wrap>{{item.title}}</h2>
       <p [innerHTML]="item.content" text-wrap></p>
       <button ion-button clear item-end (click)="itemTapped(item.id)">Choose</button>
     </ion-item> 

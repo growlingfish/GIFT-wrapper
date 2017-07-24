@@ -66,14 +66,16 @@ export class PayloadPage {
 
         this.workshop.scrapGift();
         let alert = this.alertCtrl.create({
-          title: 'Another?',
-          message: 'That part of the gift has been sent to ' + this.receiverName + '. Would you like to add another part to the gift?',
+          title: 'Another part to your gift?',
+          message: 'Do you want to build on this gift for ' + this.receiverName + ' and let him know more keenly what you want to say?',
           buttons: [
             {
               text: 'No, thanks',
               role: 'cancel',
               handler: () => {
-                this.nav.setRoot(LogoutPage);
+                this.nav.setRoot(LogoutPage, {
+                  receiverName: this.receiverName
+                });
               }
             },
             {
