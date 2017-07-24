@@ -14,7 +14,7 @@
         </ion-card-title>
         <div>If <em>you</em> could name this exhibit for {{this.workshop.gift.receiverName}} what would you call it?</div>
         <ion-item class="titletext">
-          <ion-textarea placeholder="Enter the name" [(ngModel)]="titleText"></ion-textarea>
+          <ion-textarea placeholder="Enter the name" spellcheck="true" [(ngModel)]="titleText"></ion-textarea>
         </ion-item>
         <div>
           <button ion-button [disabled]="!titleComplete()" (click)="submitTitle()">

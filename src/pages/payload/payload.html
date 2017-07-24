@@ -14,7 +14,7 @@
         </ion-card-title>
         <div>Why did you choose this for {{this.getReceiverName()}}?</div>
         <ion-item class="payloadtext">
-          <ion-textarea placeholder="Enter the content" [(ngModel)]="content"></ion-textarea>
+          <ion-textarea placeholder="Enter your reasons" spellcheck="true" [(ngModel)]="content"></ion-textarea>
         </ion-item>
         <div>
           <button ion-button [disabled]="!payloadComplete()" (click)="submitPayload()">

@@ -47,7 +47,7 @@ export class ReceiverPage {
         if(!exists) {
           let confirm = this.alertCtrl.create({
             title: 'Send an invite',
-            message: "Your recipient hasn't received or created a Gift before. When you send your gift, they will automatically be registered but will still need to choose to download the Unwrapper app before they can receive your gift.",
+            message: "Your recipient hasn't received a gift before. If you carry on they will automatically be registered and will receive an email letting them know how to get your gift.",
             buttons: [
               {
                 text: 'Scrap gift',
