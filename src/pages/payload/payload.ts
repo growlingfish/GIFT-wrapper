@@ -67,7 +67,7 @@ export class PayloadPage {
         this.workshop.scrapGift();
         let alert = this.alertCtrl.create({
           title: 'Another part to your gift?',
-          message: 'Do you want to build on this gift for ' + this.receiverName + ' and let him know more keenly what you want to say?',
+          message: 'Do you want to build on this gift for ' + this.receiverName + ' and let them know more keenly what you want to say?',
           buttons: [
             {
               text: 'No, thanks',
