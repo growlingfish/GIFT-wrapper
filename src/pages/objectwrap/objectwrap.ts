@@ -172,6 +172,7 @@ export class ObjectwrapPage {
   
     this.loading = this.loadingCtrl.create({
       content: 'Uploading...',
+      duration: 10000
     });
     this.loading.present();
   
@@ -230,6 +231,7 @@ export class ObjectwrapPage {
                           finalNavTransition.then(() => {
                             this.loading = this.loadingCtrl.create({
                               content: 'Adding exhibit ...',
+                              duration: 10000
                             });
                             this.loading.present();
                             this.workshop.finaliseObject(this.name, this.description, this.uploadedFilename).subscribe(added => {

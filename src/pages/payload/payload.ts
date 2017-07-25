@@ -101,7 +101,8 @@ export class PayloadPage {
   showLoading() {
     this.loading = this.loadingCtrl.create({
       content: 'Please wait...',
-      dismissOnPageChange: true
+      dismissOnPageChange: true,
+      duration: 10000
     });
     this.loading.present();
   }
