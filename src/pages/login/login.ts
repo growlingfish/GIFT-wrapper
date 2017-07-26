@@ -34,7 +34,7 @@ export class LoginPage {
           this.showError("Loading objects failed");
         });
       } else {
-        this.showError("Access Denied");
+        this.showError("Your email address or password was incorrect. Check them and try again.");
       }
     },
     error => {
@@ -54,7 +54,7 @@ export class LoginPage {
     this.loading.dismiss();
 
     let alert = this.alertCtrl.create({
-      title: 'Fail',
+      title: 'Login unsuccessful',
       subTitle: text,
       buttons: ['OK']
     });

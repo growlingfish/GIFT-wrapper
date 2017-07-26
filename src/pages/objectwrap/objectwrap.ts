@@ -87,7 +87,9 @@ export class ObjectwrapPage {
       quality: 80,
       sourceType: sourceType,
       saveToPhotoAlbum: false,
-      correctOrientation: true
+      correctOrientation: true,
+      targetWidth: 300,
+      targetHeight: 300
     };
   
     // Get the data of an image
